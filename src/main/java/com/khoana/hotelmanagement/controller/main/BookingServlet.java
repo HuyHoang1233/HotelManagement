@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.khoana.hotelmanagement.controller.main;
 
-/**
- *
- * @author Huyb
- */
 import com.khoana.hotelmanagement.dal.BookingDAO;
 import com.khoana.hotelmanagement.dal.RoomDAO;
 import com.khoana.hotelmanagement.model.Booking;
@@ -34,6 +26,22 @@ import java.util.*;
 @WebServlet(name = "BookingServlet", urlPatterns = {"/booking"})
 public class BookingServlet extends HttpServlet {
 
+    // ĐÃ FIX: Hàm doGet để lấy thông tin phòng và hiện cái Form Đặt Phòng cho khách điền ngày
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String roomIdStr = request.getParameter("roomId");
+        if (roomIdStr != null && !roomIdStr.isEmpty()) {
+            RoomDAO roomDAO = new RoomDAO();
+            Room room = roomDAO.getRoomByID(Integer.parseInt(roomIdStr));
+            request.setAttribute("room", room);
+            request.getRequestDispatcher("/booking.jsp").forward(request, response);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/home");
+        }
+    }
+
+    // Hàm doPost xử lý khi khách bấm nút "Xác Nhận Đặt Phòng"
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,18 +56,20 @@ public class BookingServlet extends HttpServlet {
         }
 
         try {
-            // 2. Lấy dữ liệu từ form đặt phòng
-            int roomID = Integer.parseInt(request.getParameter("roomID"));
-            String checkInStr = request.getParameter("checkIn");
-            String checkOutStr = request.getParameter("checkOut");
+            // 2. ĐÃ FIX: Đổi lại tên tham số cho khớp chuẩn với form ở booking.jsp
+            int roomID = Integer.parseInt(request.getParameter("roomId"));
+            String checkInStr = request.getParameter("checkin");
+            String checkoutStr = request.getParameter("checkout");
 
             // 3. LOGIC TÍNH TIỀN: Tính số ngày lưu trú
             LocalDate checkInDate = LocalDate.parse(checkInStr);
-            LocalDate checkOutDate = LocalDate.parse(checkOutStr);
+            LocalDate checkOutDate = LocalDate.parse(checkoutStr);
 
             long daysBetween = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
             if (daysBetween <= 0) {
-                daysBetween = 1;
+                // Ngày trả phòng không hợp lệ (trước hoặc bằng ngày nhận)
+                response.sendRedirect(request.getContextPath() + "/home.jsp?error=invalid_date");
+                return;
             }
 
             RoomDAO roomDAO = new RoomDAO();
@@ -85,7 +95,7 @@ public class BookingServlet extends HttpServlet {
                 if (userEmail != null && !userEmail.trim().isEmpty() && userEmail.contains("@")) {
                     try {
                         String roomName = "Phòng " + room.getRoomNumber();
-                        EmailUtils.sendBookingConfirmEmail(userEmail, currentUser.getFullName(), roomName, checkInStr, checkOutStr, totalPrice);
+                        EmailUtils.sendBookingConfirmEmail(userEmail, currentUser.getFullName(), roomName, checkInStr, checkoutStr, totalPrice);
                     } catch (Exception e) {
                         System.out.println("Lỗi gửi email cho: " + userEmail);
                         e.printStackTrace();
@@ -153,11 +163,5 @@ public class BookingServlet extends HttpServlet {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/home.jsp?error=invalid_data");
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.sendRedirect(request.getContextPath() + "/home.jsp");
     }
 }

@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.khoana.hotelmanagement.controller.main;
 
-/**
- *
- * @author Huyb
- */
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,28 +17,32 @@ public class SearchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Lấy dữ liệu từ form (Viết thường cho khớp với name="checkin" trong HTML)
+        // 1. Nhận thông số từ giao diện (Bao gồm cả tham số sắp xếp)
         String checkin = request.getParameter("checkin");
         String checkout = request.getParameter("checkout");
-        String guests = request.getParameter("guests");
+        String priceMin = request.getParameter("priceMin");
+        String priceMax = request.getParameter("priceMax");
 
+        // ĐÃ FIX: Lấy thêm tham số sắp xếp từ Dropdown
+        String sort = request.getParameter("sort");
+
+        // 2. Gọi DAO chui xuống DB lấy phòng
         RoomDAO roomDAO = new RoomDAO();
-        List<Room> roomList;
 
-        // 2. Logic tìm kiếm phòng
-        if (checkin == null || checkout == null || checkin.trim().isEmpty() || checkout.trim().isEmpty()) {
-            roomList = roomDAO.getAllRooms();
-        } else {
-            roomList = roomDAO.searchAvailableRoom(checkin, checkout);
-        }
+        // ĐÃ FIX: Truyền đủ 5 tham số (kèm biến sort) xuống cho DAO
+        List<Room> roomList = roomDAO.searchAdvancedRooms(checkin, checkout, priceMin, priceMax, sort);
 
-        // 3. Truyền dữ liệu sang search.jsp
-        request.setAttribute("availableRooms", roomList); 
+        // 3. Đóng gói dữ liệu gửi sang JSP
+        request.setAttribute("rooms", roomList);
         request.setAttribute("checkin", checkin);
         request.setAttribute("checkout", checkout);
-        request.setAttribute("guests", guests);
+        request.setAttribute("priceMin", priceMin);
+        request.setAttribute("priceMax", priceMax);
 
-        // 4. Chuyển hướng sang giao diện
+        // ĐÃ FIX: Trả biến sort về JSP để giữ nguyên trạng thái Dropdown hiển thị
+        request.setAttribute("sort", sort);
+
+        // 4. Chuyển hướng
         request.getRequestDispatcher("/search.jsp").forward(request, response);
     }
 
