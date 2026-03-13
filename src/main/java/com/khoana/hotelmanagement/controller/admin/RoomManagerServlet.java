@@ -1,6 +1,5 @@
 package com.khoana.hotelmanagement.controller.admin;
 
-import javax.servlet.*;
 import com.khoana.hotelmanagement.dal.RoomDAO;
 import com.khoana.hotelmanagement.model.Room;
 import java.io.IOException;
@@ -32,20 +31,21 @@ public class RoomManagerServlet extends HttpServlet {
                 try {
                     int id = Integer.parseInt(request.getParameter("id"));
                     Room existingRoom = dao.getRoomByID(id);
+                    if (existingRoom == null) {
+                        request.getSession().setAttribute("error", "Không tìm thấy phòng với ID này!");
+                        response.sendRedirect(request.getContextPath() + "/admin/rooms");
+                        return;
+                    }
                     request.setAttribute("room", existingRoom);
                     request.getRequestDispatcher("/admin/room-form.jsp").forward(request, response);
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
+                    request.getSession().setAttribute("error", "ID phòng không hợp lệ!");
                     response.sendRedirect(request.getContextPath() + "/admin/rooms");
-                }
-                break;
-            case "delete":
-                try {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    dao.deleteRoom(id);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    request.getSession().setAttribute("error", "Đã xảy ra hệ thống!");
+                    response.sendRedirect(request.getContextPath() + "/admin/rooms");
                 }
-                response.sendRedirect(request.getContextPath() + "/admin/rooms");
                 break;
             default:
                 List<Room> listRooms = dao.getAllRooms();
@@ -95,9 +95,14 @@ public class RoomManagerServlet extends HttpServlet {
                         request.getParameter("image")
                 );
                 dao.updateRoom(room);
+            } else if ("delete".equals(action)) {
+                dao.deleteRoom(Integer.parseInt(request.getParameter("id")));
             }
+        } catch (NumberFormatException e) {
+            request.getSession().setAttribute("error", "Dữ liệu nhập vào không hợp lệ (lỗi định dạng số)!");
         } catch (Exception e) {
             e.printStackTrace();
+            request.getSession().setAttribute("error", "Đã xảy ra lỗi hệ thống khi xử lý!");
         }
  
         response.sendRedirect(request.getContextPath() + "/admin/rooms");
