@@ -73,9 +73,9 @@ Liên hệ với chúng tôi
 
 <h2>Thông tin liên hệ</h2>
 
-<p><b>Địa chỉ:</b> 58 Bạch Đằng, Đà Nẵng</p>
-<p><b>Điện thoại:</b> +84 236 3937779</p>
-<p><b>Email:</b> hotel@email.com</p>
+<p><b>Địa chỉ:</b>  Ngũ Hành Sơn, Đà Nẵng</p>
+<p><b>Điện thoại:</b> +84 83 273 6689</p>
+<p><b>Email:</b> info@marriott.com</p>
 
 </div>
 
