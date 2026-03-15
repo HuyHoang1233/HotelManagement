@@ -2,194 +2,237 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
+
 <html>
-    <head>
-        <title>My Profile</title>
+<head>
+<title>My Account</title>
 
-        <style>
+<style>
 
-        body{
-            font-family: Arial, sans-serif;
-            background:#f5f6f8;
-            margin:0;
-        }
+body{
+margin:0;
+font-family:"Segoe UI", Arial;
+background:#f4f6f9;
+}
 
-        .container{
-            width:1000px;
-            margin:60px auto;
-        }
+/* Header */
 
-        .card{
-            background:white;
-            border-radius:10px;
-            padding:25px;
-            margin-bottom:25px;
-            box-shadow:0 2px 8px rgba(0,0,0,0.08);
-        }
+.header{
+background:#1f2937;
+color:white;
+padding:15px 40px;
+font-size:20px;
+font-weight:600;
+}
 
-        .title{
-            font-size:22px;
-            font-weight:600;
-            margin-bottom:15px;
-        }
+/* Container */
 
-        .profile-grid{
-            display:flex;
-            gap:80px;
-            font-size:16px;
-        }
+.container{
+width:1000px;
+margin:40px auto;
+}
 
-        .profile-grid span{
-            color:#777;
-        }
+/* Profile Card */
 
-        table{
-            width:100%;
-            border-collapse:collapse;
-        }
+.profile-card{
+background:white;
+border-radius:12px;
+padding:25px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+display:flex;
+align-items:center;
+gap:20px;
+margin-bottom:30px;
+}
 
-        th{
-            text-align:left;
-            padding:12px;
-            background:#2d2f33;
-            color:white;
-        }
+.avatar{
+width:70px;
+height:70px;
+border-radius:50%;
+background:#ddd;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+font-weight:600;
+color:#555;
+}
 
-        td{
-            padding:12px;
-            border-bottom:1px solid #eee;
-        }
+.user-info h2{
+margin:0;
+font-size:22px;
+}
 
-        .status{
-            padding:4px 10px;
-            border-radius:12px;
-            font-size:13px;
-            font-weight:600;
-        }
+.user-info p{
+margin:3px 0;
+color:#666;
+}
 
-        .pending{
-            background:#fff3cd;
-            color:#856404;
-        }
+/* Booking Card */
 
-        .confirmed{
-            background:#d4edda;
-            color:#155724;
-        }
+.card{
+background:white;
+border-radius:12px;
+padding:25px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
 
-        .cancelled{
-            background:#f8d7da;
-            color:#721c24;
-        }
+.card-title{
+font-size:20px;
+font-weight:600;
+margin-bottom:20px;
+}
 
-        .empty{
-            text-align:center;
-            color:#888;
-            padding:20px;
-        }
+/* Table */
 
-        </style>
+table{
+width:100%;
+border-collapse:collapse;
+}
 
-    </head>
+th{
+background:#111827;
+color:white;
+padding:12px;
+text-align:left;
+}
 
-    <body>
+td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
 
-        <div class="container">
+tr:hover{
+background:#fafafa;
+}
 
-            <!-- PROFILE -->
-            <div class="card">
+/* Status */
 
-                <div class="title">My Account</div>
+.status{
+padding:5px 12px;
+border-radius:20px;
+font-size:13px;
+font-weight:600;
+}
 
-                <div class="profile-grid">
+.pending{
+background:#fff3cd;
+color:#856404;
+}
 
-                    <div>
-                        <span>Full Name</span><br>
-                        <b>${sessionScope.account.fullName}</b>
-                    </div>
+.confirmed{
+background:#d4edda;
+color:#155724;
+}
 
-                    <div>
-                        <span>Email</span><br>
-                        <b>${sessionScope.account.email}</b>
-                    </div>
+.cancelled{
+background:#f8d7da;
+color:#721c24;
+}
 
-                </div>
+.empty{
+text-align:center;
+color:#777;
+padding:20px;
+}
 
-            </div>
+</style>
+
+</head>
+
+<body>
 
 
-            <!-- BOOKING HISTORY -->
-            <div class="card">
+<div class="container">
 
-                <div class="title">Booking History</div>
+<!-- PROFILE -->
 
-                <table>
+<div class="profile-card">
 
-                    <tr>
-                        <th>Room</th>
-                        <th>Type</th>
-                        <th>Check In</th>
-                        <th>Check Out</th>
-                        <th>Total Price</th>
-                        <th>Status</th>
-                    </tr>
+<div class="avatar">
+${sessionScope.account.fullName.charAt(0)}
+</div>
 
-                    <c:choose>
+<div class="user-info">
+<h2>${sessionScope.account.fullName}</h2>
+<p>${sessionScope.account.email}</p>
+</div>
 
-                        <c:when test="${not empty listBookings}">
+</div>
 
-                            <c:forEach var="b" items="${listBookings}">
+<!-- BOOKING HISTORY -->
 
-                                <tr>
-                                    <td>${b.roomNumber}</td>
-                                    <td>${b.typeName}</td>
-                                    <td>${b.checkInDate}</td>
-                                    <td>${b.checkOutDate}</td>
-                                    <td>$${b.totalPrice}</td>
+<div class="card">
 
-                                    <td>
+<div class="card-title">
+Booking History
+</div>
 
-                                        <c:choose>
+<table>
 
-                                            <c:when test="${b.status=='Pending'}">
-                                                <span class="status pending">Pending</span>
-                                            </c:when>
+<tr>
+<th>Room</th>
+<th>Type</th>
+<th>Check In</th>
+<th>Check Out</th>
+<th>Total Price</th>
+<th>Status</th>
+</tr>
 
-                                            <c:when test="${b.status=='Confirmed'}">
-                                                <span class="status confirmed">Confirmed</span>
-                                            </c:when>
+<c:choose>
 
-                                            <c:otherwise>
-                                                <span class="status cancelled">${b.status}</span>
-                                            </c:otherwise>
+<c:when test="${not empty listBookings}">
 
-                                        </c:choose>
+<c:forEach var="b" items="${listBookings}">
 
-                                    </td>
+<tr>
 
-                                </tr>
+<td>${b.roomNumber}</td>
+<td>${b.typeName}</td>
+<td>${b.checkInDate}</td>
+<td>${b.checkOutDate}</td>
+<td>$${b.totalPrice}</td>
 
-                            </c:forEach>
+<td>
 
-                        </c:when>
+<c:choose>
 
-                        <c:otherwise>
+<c:when test="${b.status=='Pending'}"> <span class="status pending">Pending</span>
+</c:when>
 
-                            <tr>
-                                <td colspan="6" class="empty">
-                                    You have no bookings yet
-                                </td>
-                            </tr>
+<c:when test="${b.status=='Confirmed'}"> <span class="status confirmed">Confirmed</span>
+</c:when>
 
-                        </c:otherwise>
+<c:otherwise> <span class="status cancelled">${b.status}</span>
+</c:otherwise>
 
-                    </c:choose>
+</c:choose>
 
-                </table>
+</td>
 
-            </div>
+</tr>
 
-        </div>
+</c:forEach>
 
-    </body>
+</c:when>
+
+<c:otherwise>
+
+<tr>
+<td colspan="6" class="empty">
+You have no bookings yet
+</td>
+</tr>
+
+</c:otherwise>
+
+</c:choose>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
 </html>

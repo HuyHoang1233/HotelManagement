@@ -1,46 +1,149 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    String ctx = request.getContextPath();
-%>
+
 <!DOCTYPE html>
+
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Services - Hotel Management</title>
+<head>
+<title>Dịch vụ</title>
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
 
-        <link rel="stylesheet" href="<%=ctx%>/assets/css/style.css" />
-    </head>
+body{
+    margin:0;
+    font-family:"Segoe UI", Arial;
+    background:#f4f6f9;
+}
 
-    <body>
-        <jsp:include page="/includes/header.jsp"/>
+/* Banner */
 
-        <section class="section about">
-            <div class="container about-grid">
-                <div class="about-text">
-                    <h2 class="section-title">Dịch vụ</h2>
-                    <p>
-                        Hotel mang đến trải nghiệm lưu trú hiện đại, tinh tế và tiện nghi.
-                        Vị trí thuận lợi, phòng ốc sạch đẹp, cùng đội ngũ nhân viên thân thiện.
-                    </p>
-                    <p>
-                        Chúng tôi hướng đến dịch vụ chuyên nghiệp, không gian ấm cúng, phù hợp cho
-                        nghỉ dưỡng và công tác.
-                    </p>
-                    <a class="btn-outline" href="<%=ctx%>/about.jsp">Xem thêm</a>
-                </div>
+.banner{
+    height:300px;
+    background:url("https://images.unsplash.com/photo-1566073771259-6a8506099945") center/cover;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:36px;
+    font-weight:600;
+}
 
-                <div class="about-photo">
-                    <img src="<%=ctx%>/assets/img/about.jpg" alt="About" />
-                </div>
-            </div>
-        </section>
+/* Container */
 
-        <jsp:include page="/includes/footer.jsp"/>
-        
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+.container{
+    width:1100px;
+    margin:50px auto;
+}
+
+/* Grid */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+/* Card */
+
+.card{
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+/* Image */
+
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+/* Content */
+
+.card-content{
+    padding:20px;
+}
+
+.card-content h3{
+    margin:0 0 10px;
+}
+
+.card-content p{
+    color:#666;
+    font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="banner">
+Dịch vụ khách sạn
+</div>
+
+<div class="container">
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874">
+<div class="card-content">
+<h3>Spa & Massage</h3>
+<p>Thư giãn với dịch vụ spa cao cấp và liệu trình massage chuyên nghiệp.</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1554284126-aa88f22d8b74">
+<div class="card-content">
+<h3>Phòng Gym</h3>
+<p>Phòng tập hiện đại với đầy đủ thiết bị cho khách lưu trú.</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1572331165267-854da2b10ccc">
+<div class="card-content">
+<h3>Hồ bơi</h3>
+<p>Hồ bơi ngoài trời với không gian thư giãn và view tuyệt đẹp.</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5">
+<div class="card-content">
+<h3>Nhà hàng</h3>
+<p>Thưởng thức ẩm thực quốc tế và đặc sản địa phương.</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511">
+<div class="card-content">
+<h3>Dịch vụ phòng</h3>
+<p>Room service 24/7 mang lại trải nghiệm tiện nghi cho khách.</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4">
+<div class="card-content">
+<h3>Xe đưa đón</h3>
+<p>Dịch vụ đưa đón sân bay tiện lợi và nhanh chóng.</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</body>
 </html>
