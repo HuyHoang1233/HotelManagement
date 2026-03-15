@@ -1,103 +1,68 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%
+    response.setContentType("text/html; charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
+    String ctx = request.getContextPath();
+%>
 <!DOCTYPE html>
-
 <html>
 <head>
-<title>Liên hệ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ</title>
 
-<style>
-
-body{
-margin:0;
-font-family:"Segoe UI",Arial;
-background:#f4f6f9;
-}
-
-.banner{
-height:300px;
-background:url("https://images.unsplash.com/photo-1551882547-ff40c63fe5fa") center/cover;
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
-font-size:36px;
-font-weight:600;
-}
-
-.container{
-width:1100px;
-margin:50px auto;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:40px;
-}
-
-.card{
-background:white;
-padding:30px;
-border-radius:12px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-
-input,textarea{
-width:100%;
-padding:10px;
-margin-bottom:15px;
-border:1px solid #ccc;
-border-radius:6px;
-}
-
-button{
-background:#1e73e8;
-color:white;
-border:none;
-padding:12px 20px;
-border-radius:6px;
-cursor:pointer;
-}
-
-</style>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="<%=ctx%>/assets/css/style.css">
+    <link rel="stylesheet" href="<%=ctx%>/assets/css/contact.css">
 </head>
-
 <body>
 
-<div class="banner">
-Liên hệ với chúng tôi
-</div>
+    <jsp:include page="/includes/header.jsp" />
 
-<div class="container">
+    <!-- HERO -->
+    <section class="contact-hero">
+        <img src="<%=ctx%>/assets/img/banner.jpg" alt="Liên hệ" class="contact-hero-img">
+        <div class="contact-hero-overlay">
+            <div class="container">
+                <h1>Liên hệ</h1>
+                <p>Kết nối với chúng tôi để được hỗ trợ nhanh chóng và tận tâm</p>
+            </div>
+        </div>
+    </section>
 
-<div class="card">
+    <!-- CONTACT CONTENT -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
 
-<h2>Thông tin liên hệ</h2>
+                <!-- CỘT TRÁI -->
+                <div class="contact-info-box">
+                    <h2>THÔNG TIN LIÊN HỆ</h2>
 
-<p><b>Địa chỉ:</b>  Ngũ Hành Sơn, Đà Nẵng</p>
-<p><b>Điện thoại:</b> +84 83 273 6689</p>
-<p><b>Email:</b> info@marriott.com</p>
+                    <div class="contact-info-list">
+                        <p><strong>Hotel</strong></p>
+                        <p>Ngũ Hành Sơn - Đà Nẵng</p>
+                        <p>Điện thoại: 0123 456 789</p>
+                        <p>Email: info@abcd.com</p>
+                    </div>
+                </div>
 
-</div>
+                <!-- CỘT PHẢI -->
+                <div class="contact-map-box">
+                    <iframe
+                        src="https://www.google.com/maps?q=Ng%C5%A9%20H%C3%A0nh%20S%C6%A1n%2C%20%C4%90%C3%A0%20N%E1%BA%B5ng&z=14&output=embed"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
 
-<div class="card">
+            </div>
+        </div>
+    </section>
 
-<h2>Gửi tin nhắn</h2>
-
-<form>
-
-<input type="text" placeholder="Tên của bạn">
-
-<input type="email" placeholder="Email">
-
-<textarea rows="5" placeholder="Nội dung"></textarea>
-
-<button>Gửi</button>
-
-</form>
-
-</div>
-
-</div>
+    <jsp:include page="/includes/footer.jsp" />
 
 </body>
 </html>
