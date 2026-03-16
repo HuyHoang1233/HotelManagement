@@ -41,12 +41,20 @@
         <style>
             body {
                 font-family: 'Swiss 721 BT', 'Roboto', sans-serif;
-                background-color: #f4f4f4;
+                    background: url("assets/img/bg-login.jpeg") no-repeat center center fixed;
+                background-size: cover;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 min-height: 100vh;
             }
+            body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: -1;
+}
             .login-container {
                 background: #ffffff;
                 width: 100%;
