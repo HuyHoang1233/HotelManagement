@@ -39,13 +39,14 @@ content:"";
 position:absolute;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.45);
+background:rgba(0,0,0,0.25);
 }
 
 .room-banner h1{
 position:relative;
+color:white;
+text-shadow:0 4px 12px rgba(0,0,0,0.6);
 }
-
 /* section */
 
 .rooms{
@@ -122,7 +123,6 @@ color:white;
 
 <div class="container">
 
-<h2 class="text-center mb-5">Danh sách phòng</h2>
 
 <div class="row g-4">
 
