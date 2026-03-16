@@ -1,46 +1,194 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    String ctx = request.getContextPath();
+String ctx = request.getContextPath();
 %>
+
 <!DOCTYPE html>
+
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Meeting - Hotel Management</title>
+<head>
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hội Nghị</title>
 
-        <link rel="stylesheet" href="<%=ctx%>/assets/css/style.css" />
-    </head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <body>
-        <jsp:include page="/includes/header.jsp"/>
+<link rel="stylesheet" href="<%=ctx%>/assets/css/style.css"/>
 
-        <section class="section about">
-            <div class="container about-grid">
-                <div class="about-text">
-                    <h2 class="section-title">Hội nghị</h2>
-                    <p>
-                        Hotel mang đến trải nghiệm lưu trú hiện đại, tinh tế và tiện nghi.
-                        Vị trí thuận lợi, phòng ốc sạch đẹp, cùng đội ngũ nhân viên thân thiện.
-                    </p>
-                    <p>
-                        Chúng tôi hướng đến dịch vụ chuyên nghiệp, không gian ấm cúng, phù hợp cho
-                        nghỉ dưỡng và công tác.
-                    </p>
-                    <a class="btn-outline" href="<%=ctx%>/about.jsp">Xem thêm</a>
-                </div>
+<style>
 
-                <div class="about-photo">
-                    <img src="<%=ctx%>/assets/img/about.jpg" alt="About" />
-                </div>
-            </div>
-        </section>
+/* Banner */
 
-        <jsp:include page="/includes/footer.jsp"/>
-        
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+.meeting-banner{
+height:420px;
+background:url("https://images.unsplash.com/photo-1517457373958-b7bdd4587205") center/cover;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:48px;
+font-weight:600;
+position:relative;
+}
+
+.meeting-banner::after{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+}
+
+.meeting-banner h1{
+position:relative;
+}
+
+/* Section */
+
+.section{
+padding:80px 0;
+}
+
+.gallery img{
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:10px;
+}
+
+/* Features */
+
+.feature-box{
+display:flex;
+gap:15px;
+margin-bottom:20px;
+}
+
+.feature-box i{
+font-size:24px;
+color:#d4af37;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<jsp:include page="/includes/header.jsp"/>
+
+<!-- Banner -->
+
+<div class="meeting-banner">
+<h1>Hội Nghị & Sự Kiện</h1>
+</div>
+
+<!-- Intro -->
+
+<section class="section">
+
+<div class="container text-center">
+
+<h2 class="mb-4">Không gian hội nghị chuyên nghiệp</h2>
+
+<p class="text-muted">
+Khách sạn cung cấp không gian hội nghị hiện đại với thiết kế sang trọng,
+phù hợp cho các buổi họp, hội thảo và sự kiện doanh nghiệp.
+</p>
+
+</div>
+
+</section>
+
+<!-- Gallery -->
+
+<section class="section bg-light">
+
+<div class="container">
+
+<h2 class="text-center mb-5">Không gian hội nghị</h2>
+
+<div class="row g-4 gallery">
+
+<div class="col-md-4">
+<img src="https://images.unsplash.com/photo-1511578314322-379afb476865">
+</div>
+
+<div class="col-md-4">
+<img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b">
+</div>
+
+<div class="col-md-4">
+<img src="https://images.unsplash.com/photo-1503428593586-e225b39bddfe">
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- Facilities -->
+
+<section class="section">
+
+<div class="container">
+
+<h2 class="text-center mb-5">Tiện ích hội nghị</h2>
+
+<div class="row">
+
+<div class="col-md-6">
+
+<div class="feature-box">
+<i class="fa fa-wifi"></i>
+<div>
+<h5>Wifi tốc độ cao</h5>
+<p>Kết nối internet ổn định cho hội nghị và hội thảo.</p>
+</div>
+</div>
+
+<div class="feature-box">
+<i class="fa fa-video"></i>
+<div>
+<h5>Máy chiếu hiện đại</h5>
+<p>Trang bị máy chiếu và màn hình lớn.</p>
+</div>
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="feature-box">
+<i class="fa fa-microphone"></i>
+<div>
+<h5>Hệ thống âm thanh</h5>
+<p>Âm thanh chuyên nghiệp cho sự kiện.</p>
+</div>
+</div>
+
+<div class="feature-box">
+<i class="fa fa-users"></i>
+<div>
+<h5>Sức chứa lớn</h5>
+<p>Không gian phù hợp cho nhiều quy mô sự kiện.</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<jsp:include page="/includes/footer.jsp"/>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 </html>
