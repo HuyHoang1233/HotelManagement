@@ -35,14 +35,40 @@
                 <c:choose>
                     <%-- NẾU ĐÃ ĐĂNG NHẬP --%>
                     <c:when test="${sessionScope.account != null}">
-                        <span class="text-white fw-bold me-3">Hi, ${sessionScope.account.fullName != null ? sessionScope.account.fullName : sessionScope.account.username}</span>
+                        <div class="dropdown me-2">
+                            <a class="text-white fw-bold text-decoration-none dropdown-toggle d-flex align-items-center" href="#" role="button" id="userMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="bg-light text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold me-2" style="width: 32px; height: 32px;">
+                                    ${sessionScope.account.fullName != null ? sessionScope.account.fullName.substring(0,1).toUpperCase() : sessionScope.account.username.substring(0,1).toUpperCase()}
+                                </div>
+                                ${sessionScope.account.fullName != null ? sessionScope.account.fullName : sessionScope.account.username}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userMenuLink">
+                                <li>
+                                    <div class="dropdown-header text-center">
+                                        <strong>${sessionScope.account.fullName != null ? sessionScope.account.fullName : sessionScope.account.username}</strong><br>
+                                        <small class="text-muted">${sessionScope.account.email}</small><br>
+                                        <c:choose>
+                                            <c:when test="${sessionScope.account.roleID == 1}">
+                                                <span class="badge bg-danger mt-1">Admin</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span class="badge bg-secondary mt-1">Khách hàng</span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="<%=ctx%>/history"><i class="fas fa-user-circle me-2 text-primary"></i> Thông tin tài khoản</a></li>
+                                <li><a class="dropdown-item" href="<%=ctx%>/history#bookingHistory"><i class="fas fa-history me-2 text-success"></i> Lịch sử đặt phòng</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="<%=ctx%>/logout"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a></li>
+                            </ul>
+                        </div>
 
                         <%-- HIỆN NÚT QUẢN TRỊ NẾU LÀ ADMIN (roleID = 1) --%>
                         <c:if test="${sessionScope.account.roleID == 1}">
                             <a href="<%=ctx%>/admin/admin_dashboard.jsp" class="btn btn-warning btn-sm fw-bold">Quản Trị</a>
                         </c:if>
-
-                        <a href="<%=ctx%>/logout" class="btn btn-danger btn-sm fw-bold">Đăng Xuất</a>
                     </c:when>
 
                     <%-- NẾU CHƯA ĐĂNG NHẬP --%>

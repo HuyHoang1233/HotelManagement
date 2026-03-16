@@ -24,9 +24,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Config {
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "http://localhost:8080/HotelManagement/paymentStatus"; 
-    public static String vnp_TmnCode = "SS6JK4E8";
-    public static String vnp_HashSecret = "ZV0SSSACH3UW6Q4QTJ9A4UKHCP97J9RR";
+    public static String vnp_ReturnUrl = "http://localhost:8080/HotelManagement/paymentStatus";
+    public static String vnp_TmnCode = "THKTKBJQ";
+    public static String vnp_HashSecret = "ZU92BLS2WN3SBJSO78JCTDETW8SMA685";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 
     public static String md5(String message) {
@@ -61,7 +61,7 @@ public class Config {
         return digest;
     }
 
-    //Util for VNPAY
+    // Util for VNPAY
     public static String hashAllFields(Map fields) {
         List fieldNames = new ArrayList(fields.keySet());
         Collections.sort(fieldNames);
