@@ -23,7 +23,7 @@
             <div class="hero-overlay"></div>
 
             <div class="hero-content">
-                <h1>Hotel</h1>
+                <h1>Marriot Hotel</h1>
                 <p>Nghỉ dưỡng hiện đại - dịch vụ tận tâm</p>
 
                 <form class="hero-search" action="<%=ctx%>/search" method="get">

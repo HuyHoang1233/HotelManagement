@@ -46,7 +46,7 @@
                 <a href="<%=ctx%>/admin/admin_dashboard.jsp"><i class="fas fa-tachometer-alt me-2"></i> Tổng quan</a>
                 <a href="<%=ctx%>/admin/admin_room_form.jsp"><i class="fas fa-bed me-2"></i> Quản lý Phòng</a>
                 <a href="<%=ctx%>/admin/admin_booking_manager.jsp"><i class="fas fa-calendar-check me-2"></i> Quản lý Đặt phòng</a>
-                <a href="<%=ctx%>/admin/admin_user_manager.jsp" class="active"><i class="fas fa-users me-2"></i> Quản lý Người dùng</a>
+                <a href="<%=ctx%>/admin/users" class="active"><i class="fas fa-users me-2"></i> Quản lý Người dùng</a>
                 <a href="<%=ctx%>/home" class="mt-5 border-top border-secondary" style="border-left: none;"><i class="fas fa-arrow-left me-2"></i> Về trang Khách</a>
             </div>
 
