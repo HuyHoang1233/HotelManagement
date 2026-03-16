@@ -6,7 +6,7 @@
 <html lang="vi">
     <head>
         <meta charset="UTF-8">
-        <title>Quản Lý Phòng - Marriott Admin</title>
+        <title>Quản Lý Phòng - DANA Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
@@ -46,9 +46,9 @@
     <body>
         <div class="d-flex">
             <div class="sidebar" style="width: 250px;">
-                <div class="brand"><i class="fas fa-hotel text-warning me-2"></i> MARRIOTT ADMIN</div>
+                <div class="brand"><i class="fas fa-hotel text-warning me-2"></i> DANA ADMIN</div>
                 <a href="<%=ctx%>/admin/admin_dashboard.jsp"><i class="fas fa-tachometer-alt me-2"></i> Tổng quan</a>
-                <a href="<%=ctx%>/admin/admin_room_form.jsp" class="active"><i class="fas fa-bed me-2"></i> Quản lý Phòng</a>
+                <a href="<%=ctx%>/admin/room-manager" class="active"><i class="fas fa-bed me-2"></i> Quản lý Phòng</a>
                 <a href="<%=ctx%>/admin/admin_booking_manager.jsp"><i class="fas fa-calendar-check me-2"></i> Quản lý Đặt phòng</a>
                 <a href="<%=ctx%>/admin/admin_user_manager.jsp"><i class="fas fa-users me-2"></i> Quản lý Người dùng</a>
                 <a href="<%=ctx%>/home" class="mt-5 border-top border-secondary" style="border-left: none;"><i class="fas fa-arrow-left me-2"></i> Về trang Khách</a>
@@ -59,7 +59,7 @@
 
                 <div class="card p-4 shadow-sm border-0 bg-white mb-4" style="border-radius: 12px;">
                     <div class="d-flex justify-content-between mb-3">
-                        <h5 class="fw-bold">Danh sách phòng hiện có</h5>
+                        <h5 class="fw-bold">Danh sách phòng hiện có (${totalRooms} phòng sẵn có)</h5>
                         <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#formPhieu"><i class="fas fa-plus me-2"></i>Thêm Phòng Mới</button>
                     </div>
 
@@ -88,6 +88,7 @@
                                 <c:choose>
                                     <c:when test="${r.status == 'Available'}"><span class="badge bg-success">Trống</span></c:when>
                                     <c:when test="${r.status == 'Occupied'}"><span class="badge bg-warning text-dark">Đang Thuê</span></c:when>
+                                    <c:when test="${r.status == 'Booked'}"><span class="badge text-white" style="background-color: #6f42c1;">Đã Đặt</span></c:when>
                                     <c:otherwise><span class="badge bg-danger">Bảo Trì</span></c:otherwise>
                                 </c:choose>
                                 </td>

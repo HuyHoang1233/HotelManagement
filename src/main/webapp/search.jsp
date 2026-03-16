@@ -54,15 +54,15 @@
                                 <div class="mb-4">
                                     <div class="filter-title">Loại Phòng</div>
                                     <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" name="roomType" value="single" id="typeSingle">
+                                        <input class="form-check-input" type="checkbox" name="roomType" value="single" id="typeSingle" ${check_single}>
                                         <label class="form-check-label" for="typeSingle">Phòng Đơn</label>
                                     </div>
                                     <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" name="roomType" value="double" id="typeDouble">
+                                        <input class="form-check-input" type="checkbox" name="roomType" value="double" id="typeDouble" ${check_double}>
                                         <label class="form-check-label" for="typeDouble">Phòng Đôi</label>
                                     </div>
                                     <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" name="roomType" value="suite" id="typeSuite">
+                                        <input class="form-check-input" type="checkbox" name="roomType" value="suite" id="typeSuite" ${check_suite}>
                                         <label class="form-check-label" for="typeSuite">Phòng Suite</label>
                                     </div>
                                 </div>
@@ -109,14 +109,12 @@
                         </div>
                         <div class="d-flex align-items-center">
                             <span class="me-2 text-muted text-nowrap">Sắp xếp:</span>
-
                             <select class="form-select form-select-sm" style="width: 180px;" 
                                     onchange="document.getElementById('sortInput').value = this.value; document.getElementById('filterForm').submit();">
                                 <option value="" ${empty sort ? 'selected' : ''}>-- Mặc định --</option>
                                 <option value="price_asc" ${sort == 'price_asc' ? 'selected' : ''}>Giá: Thấp → Cao</option>
                                 <option value="price_desc" ${sort == 'price_desc' ? 'selected' : ''}>Giá: Cao → Thấp</option>
                             </select>
-
                         </div>
                     </div>
 
@@ -151,6 +149,7 @@
                                             <div class="d-grid gap-2">
                                                 <a href="<%=ctx%>/detail?roomId=${room.roomID}" class="btn btn-outline-primary fw-bold">Xem Chi Tiết</a>
                                                 <a href="<%=ctx%>/booking?roomId=${room.roomID}" class="btn btn-primary fw-bold">Đặt Ngay</a>
+                                                <a href="<%=ctx%>/wishlist?action=toggle&roomId=${room.roomID}" class="btn btn-outline-danger fw-bold"><i class="far fa-heart"></i> Lưu Yêu Thích</a>
                                             </div>
                                         </div>
                                     </div>

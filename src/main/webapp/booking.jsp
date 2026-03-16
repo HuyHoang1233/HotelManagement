@@ -29,7 +29,7 @@
                         </c:if>
                         <c:if test="${not empty error}">
                             <div class="alert alert-danger fs-5 text-center fw-bold"><i class="fas fa-times-circle me-2"></i>${error}</div>
-                        </c:if>
+                            </c:if>
 
                         <c:if test="${empty message}">
 

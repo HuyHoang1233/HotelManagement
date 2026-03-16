@@ -16,11 +16,10 @@ public class UserManagerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            
-        // Nhận action từ giao diện gửi lên (nếu không có thì mặc định là list)
+
         String action = request.getParameter("action");
         if (action == null) {
-            action = "list"; 
+            action = "list";
         }
 
         UserDAO dao = new UserDAO();
@@ -44,14 +43,13 @@ public class UserManagerServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/admin/users");
                 }
             } else {
-                // Lấy danh sách user và đẩy sang trang JSP cho Frontend hiển thị
-                List<User> listUsers = dao.getAllUsers();
-                request.setAttribute("listUsers", listUsers);
-                request.getRequestDispatcher("/admin/user-list.jsp").forward(request, response);
+                List<User> userList = dao.getAllUsers();
+                request.setAttribute("userList", userList);
+                request.getRequestDispatcher("/admin/admin_user_manager.jsp").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "/admin/users");
+            response.getWriter().println("System Error: " + e.getMessage());
         }
     }
 
@@ -66,10 +64,10 @@ public class UserManagerServlet extends HttpServlet {
                 User newUser = new User();
                 newUser.setFullName(request.getParameter("fullName"));
                 newUser.setEmail(request.getParameter("email"));
-                newUser.setPassword(request.getParameter("password")); // Hash if needed
+                newUser.setPassword(request.getParameter("password"));
                 newUser.setRoleID(Integer.parseInt(request.getParameter("roleID")));
                 if (dao.checkEmailExist(newUser.getEmail())) {
-                   request.getSession().setAttribute("error", "Email đã tồn tại trong hệ thống!");
+                    request.getSession().setAttribute("error", "Email đã tồn tại trong hệ thống!");
                 } else {
                     dao.insertUserAdmin(newUser);
                 }
@@ -79,20 +77,23 @@ public class UserManagerServlet extends HttpServlet {
                 user.setId(Integer.parseInt(request.getParameter("id")));
                 user.setFullName(request.getParameter("fullName"));
                 user.setEmail(request.getParameter("email"));
-                user.setPassword(request.getParameter("password")); // Hash if needed
+                user.setPassword(request.getParameter("password"));
                 user.setRoleID(Integer.parseInt(request.getParameter("roleID")));
                 dao.updateUserProfile(user);
                 response.sendRedirect(request.getContextPath() + "/admin/users");
             } else if ("delete".equals(action)) {
                 int delId = Integer.parseInt(request.getParameter("id"));
                 dao.deleteUser(delId);
-                // Xóa xong thì chuyển hướng lại trang danh sách
                 response.sendRedirect(request.getContextPath() + "/admin/users");
             } else if ("changeRole".equals(action)) {
                 int userId = Integer.parseInt(request.getParameter("id"));
                 int newRole = Integer.parseInt(request.getParameter("role"));
                 dao.changeUserRole(userId, newRole);
-                // Đổi quyền xong thì chuyển hướng lại trang danh sách
+                response.sendRedirect(request.getContextPath() + "/admin/users");
+            } else if ("toggleStatus".equals(action)) {
+                int userId = Integer.parseInt(request.getParameter("id"));
+                String newStatus = request.getParameter("newStatus");
+                dao.updateUserStatus(userId, newStatus);
                 response.sendRedirect(request.getContextPath() + "/admin/users");
             } else {
                 doGet(request, response);
