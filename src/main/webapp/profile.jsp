@@ -2,91 +2,139 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
+
 <html>
     <head>
-        <title>My Profile</title>
+        <title>My Account</title>
 
         <style>
 
-        body{
-            font-family: Arial, sans-serif;
-            background:#f5f6f8;
-            margin:0;
-        }
+            body{
+                margin:0;
+                font-family:"Segoe UI", Arial;
+                background:#f4f6f9;
+            }
 
-        .container{
-            width:1000px;
-            margin:60px auto;
-        }
+            /* Header */
 
-        .card{
-            background:white;
-            border-radius:10px;
-            padding:25px;
-            margin-bottom:25px;
-            box-shadow:0 2px 8px rgba(0,0,0,0.08);
-        }
+            .header{
+                background:#1f2937;
+                color:white;
+                padding:15px 40px;
+                font-size:20px;
+                font-weight:600;
+            }
 
-        .title{
-            font-size:22px;
-            font-weight:600;
-            margin-bottom:15px;
-        }
+            /* Container */
 
-        .profile-grid{
-            display:flex;
-            gap:80px;
-            font-size:16px;
-        }
+            .container{
+                width:1000px;
+                margin:40px auto;
+            }
 
-        .profile-grid span{
-            color:#777;
-        }
+            /* Profile Card */
 
-        table{
-            width:100%;
-            border-collapse:collapse;
-        }
+            .profile-card{
+                background:white;
+                border-radius:12px;
+                padding:25px;
+                box-shadow:0 4px 12px rgba(0,0,0,0.08);
+                display:flex;
+                align-items:center;
+                gap:20px;
+                margin-bottom:30px;
+            }
 
-        th{
-            text-align:left;
-            padding:12px;
-            background:#2d2f33;
-            color:white;
-        }
+            .avatar{
+                width:70px;
+                height:70px;
+                border-radius:50%;
+                background:#ddd;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:28px;
+                font-weight:600;
+                color:#555;
+            }
 
-        td{
-            padding:12px;
-            border-bottom:1px solid #eee;
-        }
+            .user-info h2{
+                margin:0;
+                font-size:22px;
+            }
 
-        .status{
-            padding:4px 10px;
-            border-radius:12px;
-            font-size:13px;
-            font-weight:600;
-        }
+            .user-info p{
+                margin:3px 0;
+                color:#666;
+            }
 
-        .pending{
-            background:#fff3cd;
-            color:#856404;
-        }
+            /* Booking Card */
 
-        .confirmed{
-            background:#d4edda;
-            color:#155724;
-        }
+            .card{
+                background:white;
+                border-radius:12px;
+                padding:25px;
+                box-shadow:0 4px 12px rgba(0,0,0,0.08);
+            }
 
-        .cancelled{
-            background:#f8d7da;
-            color:#721c24;
-        }
+            .card-title{
+                font-size:20px;
+                font-weight:600;
+                margin-bottom:20px;
+            }
 
-        .empty{
-            text-align:center;
-            color:#888;
-            padding:20px;
-        }
+            /* Table */
+
+            table{
+                width:100%;
+                border-collapse:collapse;
+            }
+
+            th{
+                background:#111827;
+                color:white;
+                padding:12px;
+                text-align:left;
+            }
+
+            td{
+                padding:12px;
+                border-bottom:1px solid #eee;
+            }
+
+            tr:hover{
+                background:#fafafa;
+            }
+
+            /* Status */
+
+            .status{
+                padding:5px 12px;
+                border-radius:20px;
+                font-size:13px;
+                font-weight:600;
+            }
+
+            .pending{
+                background:#fff3cd;
+                color:#856404;
+            }
+
+            .confirmed{
+                background:#d4edda;
+                color:#155724;
+            }
+
+            .cancelled{
+                background:#f8d7da;
+                color:#721c24;
+            }
+
+            .empty{
+                text-align:center;
+                color:#777;
+                padding:20px;
+            }
 
         </style>
 
@@ -94,34 +142,31 @@
 
     <body>
 
+
         <div class="container">
 
             <!-- PROFILE -->
-            <div class="card">
 
-                <div class="title">My Account</div>
+            <div class="profile-card">
 
-                <div class="profile-grid">
+                <div class="avatar">
+                    ${sessionScope.account.fullName.charAt(0)}
+                </div>
 
-                    <div>
-                        <span>Full Name</span><br>
-                        <b>${sessionScope.account.fullName}</b>
-                    </div>
-
-                    <div>
-                        <span>Email</span><br>
-                        <b>${sessionScope.account.email}</b>
-                    </div>
-
+                <div class="user-info">
+                    <h2>${sessionScope.account.fullName}</h2>
+                    <p>${sessionScope.account.email}</p>
                 </div>
 
             </div>
 
-
             <!-- BOOKING HISTORY -->
+
             <div class="card">
 
-                <div class="title">Booking History</div>
+                <div class="card-title">
+                    Booking History
+                </div>
 
                 <table>
 
@@ -141,6 +186,7 @@
                             <c:forEach var="b" items="${listBookings}">
 
                                 <tr>
+
                                     <td>${b.roomNumber}</td>
                                     <td>${b.typeName}</td>
                                     <td>${b.checkInDate}</td>
@@ -151,16 +197,13 @@
 
                                         <c:choose>
 
-                                            <c:when test="${b.status=='Pending'}">
-                                                <span class="status pending">Pending</span>
+                                            <c:when test="${b.status=='Pending'}"> <span class="status pending">Pending</span>
                                             </c:when>
 
-                                            <c:when test="${b.status=='Confirmed'}">
-                                                <span class="status confirmed">Confirmed</span>
+                                            <c:when test="${b.status=='Confirmed'}"> <span class="status confirmed">Confirmed</span>
                                             </c:when>
 
-                                            <c:otherwise>
-                                                <span class="status cancelled">${b.status}</span>
+                                            <c:otherwise> <span class="status cancelled">${b.status}</span>
                                             </c:otherwise>
 
                                         </c:choose>

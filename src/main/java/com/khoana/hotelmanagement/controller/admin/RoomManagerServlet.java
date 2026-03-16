@@ -10,18 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "RoomManagerServlet", urlPatterns = {"/admin/rooms"})
+// Đổi đường dẫn cho khớp với Menu Sidebar (và trỏ thêm '/admin/rooms' của file jsps)
+@WebServlet(name = "RoomManagerServlet", urlPatterns = {"/admin/room-manager", "/admin/rooms"})
 public class RoomManagerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        RoomDAO dao = new RoomDAO();
         String action = request.getParameter("action");
         if (action == null) {
             action = "list";
         }
-
-        RoomDAO dao = new RoomDAO();
 
         switch (action) {
             case "new":
@@ -29,7 +30,13 @@ public class RoomManagerServlet extends HttpServlet {
                 break;
             case "edit":
                 try {
-                    int id = Integer.parseInt(request.getParameter("id"));
+                    // Lấy ID phòng (file list có thể dùng id hoặc roomID, phòng hờ cả hai)
+                    String idParam = request.getParameter("id");
+                    if (idParam == null) {
+                        idParam = request.getParameter("roomID");
+                    }
+                    
+                    int id = Integer.parseInt(idParam);
                     Room existingRoom = dao.getRoomByID(id);
                     if (existingRoom == null) {
                         request.getSession().setAttribute("error", "Không tìm thấy phòng với ID này!");
@@ -43,11 +50,24 @@ public class RoomManagerServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/admin/rooms");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    request.getSession().setAttribute("error", "Đã xảy ra hệ thống!");
+                    request.getSession().setAttribute("error", "Đã xảy ra lỗi hệ thống!");
                     response.sendRedirect(request.getContextPath() + "/admin/rooms");
                 }
                 break;
+            case "delete":
+                // Tình huống form xóa gửi bằng GET
+                try {
+                    String idParam = request.getParameter("id");
+                    if (idParam == null) idParam = request.getParameter("roomID");
+                    int id = Integer.parseInt(idParam);
+                    dao.deleteRoom(id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                response.sendRedirect(request.getContextPath() + "/admin/rooms");
+                break;
             default:
+                // Mặc định luôn tải danh sách (khớp với attribute ${listRooms} trong trang room-list.jsp)
                 List<Room> listRooms = dao.getAllRooms();
                 request.setAttribute("listRooms", listRooms);
                 request.getRequestDispatcher("/admin/room-list.jsp").forward(request, response);
@@ -58,53 +78,62 @@ public class RoomManagerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
-
         RoomDAO dao = new RoomDAO();
 
         try {
-            if ("insert".equals(action)) {
-                // Ép kiểu typeID từ chuỗi sang số nguyên
-                int typeID = Integer.parseInt(request.getParameter("typeID"));
-                
-                Room newRoom = new Room(
-                        0, // roomID tự tăng nên để 0
-                        request.getParameter("roomNumber"),
-                        typeID,
-                        "", // typeName không cần khi insert, để rỗng
-                        Double.parseDouble(request.getParameter("price")),
-                        request.getParameter("status"),
-                        request.getParameter("description"),
-                        request.getParameter("image")
-                );
-                dao.addRoom(newRoom);
-
-            } else if ("update".equals(action)) {
-                // Ép kiểu typeID từ chuỗi sang số nguyên
-                int typeID = Integer.parseInt(request.getParameter("typeID"));
-                
-                Room room = new Room(
-                        Integer.parseInt(request.getParameter("id")),
-                        request.getParameter("roomNumber"),
-                        typeID,
-                        "", // typeName không cần khi update, để rỗng
-                        Double.parseDouble(request.getParameter("price")),
-                        request.getParameter("status"),
-                        request.getParameter("description"),
-                        request.getParameter("image")
-                );
-                dao.updateRoom(room);
-            } else if ("delete".equals(action)) {
-                dao.deleteRoom(Integer.parseInt(request.getParameter("id")));
+            // Trường hợp form xử lý xóa phòng (method=POST trong room-list.jsp)
+            if ("delete".equals(action)) {
+                String idParam = request.getParameter("id");
+                if (idParam == null) idParam = request.getParameter("roomID");
+                dao.deleteRoom(Integer.parseInt(idParam));
+                response.sendRedirect(request.getContextPath() + "/admin/rooms");
+                return;
             }
+
+            // Lấy các tham số từ form nhập liệu
+            String roomNumber = request.getParameter("roomNumber");
+            double price = Double.parseDouble(request.getParameter("price"));
+            String status = request.getParameter("status");
+            String description = request.getParameter("description");
+            String image = request.getParameter("image");
+
+            // Chuyển loại phòng từ Text sang ID
+            String roomType = request.getParameter("roomType");
+            int typeID = 1; // Mặc định
+            if ("Double".equals(roomType) || "Superior".equals(roomType)) {
+                typeID = 2;
+            } else if ("VIP".equals(roomType) || "Deluxe".equals(roomType)) {
+                typeID = 3;
+            } else if ("Suite".equals(roomType)) {
+                typeID = 4;
+            }
+
+            // Xử lý THÊM MỚI (form ở room-form.jsp dùng action="insert")
+            if ("insert".equals(action) || "add".equals(action)) {
+                Room newRoom = new Room(0, roomNumber, typeID, roomType, price, status, description, image);
+                dao.addRoom(newRoom);
+            } 
+            // Xử lý CẬP NHẬT
+            else if ("update".equals(action)) {
+                String idParam = request.getParameter("id");
+                if (idParam == null) idParam = request.getParameter("roomID");
+                int roomID = Integer.parseInt(idParam);
+                Room room = new Room(roomID, roomNumber, typeID, roomType, price, status, description, image);
+                dao.updateRoom(room);
+            }
+
         } catch (NumberFormatException e) {
             request.getSession().setAttribute("error", "Dữ liệu nhập vào không hợp lệ (lỗi định dạng số)!");
+            System.out.println("Lỗi parse số: " + e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             request.getSession().setAttribute("error", "Đã xảy ra lỗi hệ thống khi xử lý!");
         }
- 
+
+        // Hoàn tất thì load lại danh sách
         response.sendRedirect(request.getContextPath() + "/admin/rooms");
     }
 }

@@ -106,7 +106,7 @@ public class UserDAO extends DBContext {
             System.out.println("Lỗi register: " + e.getMessage());
             e.printStackTrace();
         }
-        return false; 
+        return false;
     }
 
     // 5. Hàm Đổi Mật Khẩu
@@ -163,7 +163,7 @@ public class UserDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new User(
-                        rs.getInt("userID"), 
+                        rs.getInt("userID"),
                         rs.getString("fullName"),
                         rs.getString("email"),
                         rs.getString("password"),
@@ -216,7 +216,12 @@ public class UserDAO extends DBContext {
     public User getUserByID(int id) {
         String sql = "SELECT * FROM Users WHERE userID = ?";
         try {
-            if (connection == null) return null;
+            if (connection == null) {
+                return null;
+            }
+            if (connection == null) {
+                return null;
+            }
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -240,7 +245,12 @@ public class UserDAO extends DBContext {
     public boolean insertUserAdmin(User user) {
         String sql = "INSERT INTO Users (fullName, email, password, roleID) VALUES (?, ?, ?, ?)";
         try {
-            if (connection == null) return false;
+            if (connection == null) {
+                return false;
+            }
+            if (connection == null) {
+                return false;
+            }
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setNString(1, user.getFullName());
             ps.setString(2, user.getEmail());
@@ -259,7 +269,12 @@ public class UserDAO extends DBContext {
     public boolean updateUserProfile(User user) {
         String sql = "UPDATE Users SET fullName = ?, email = ?, password = ?, roleID = ? WHERE userID = ?";
         try {
-            if (connection == null) return false;
+            if (connection == null) {
+                return false;
+            }
+            if (connection == null) {
+                return false;
+            }
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setNString(1, user.getFullName());
             ps.setString(2, user.getEmail());

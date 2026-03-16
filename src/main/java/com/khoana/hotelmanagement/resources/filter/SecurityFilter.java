@@ -1,4 +1,4 @@
-package com.khoana.hotelmanagement.filter;
+package com.khoana.hotelmanagement.resources.filter;
 
 import com.khoana.hotelmanagement.model.User;
 import java.io.IOException;
