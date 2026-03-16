@@ -14,7 +14,7 @@
 
             <div class="col-md-4 col-lg-4 mb-4">
                 <h5 class="text-uppercase fw-bold mb-4 text-warning">Thông Tin Liên Hệ</h5>
-                <p class="mb-2"><i class="fas fa-building me-3 text-secondary"></i> Marriott Hotel</p>
+                <p class="mb-2"><i class="fas fa-building me-3 text-secondary"></i> DaNa Hotel</p>
                 <p class="mb-2"><i class="fas fa-map-marker-alt me-3 text-secondary"></i> Ngũ Hành Sơn, Đà Nẵng</p>
                 <p class="mb-2"><i class="fas fa-phone-alt me-3 text-secondary"></i> 083 273 6689</p>
                 <p class="mb-2"><i class="fas fa-envelope me-3 text-secondary"></i> info@marriott.com</p>

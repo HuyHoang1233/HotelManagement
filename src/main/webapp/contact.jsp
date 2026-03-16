@@ -41,7 +41,7 @@
                     <h2>THÔNG TIN LIÊN HỆ</h2>
 
                     <div class="contact-info-list">
-                        <p><strong>Hotel</strong></p>
+                        <p><strong>DaNa Hotel</strong></p>
                         <p>Ngũ Hành Sơn - Đà Nẵng</p>
                         <p>Điện thoại: 0123 456 789</p>
                         <p>Email: info@abcd.com</p>

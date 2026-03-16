@@ -1,149 +1,208 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+String ctx = request.getContextPath();
+%>
 
 <!DOCTYPE html>
-
 <html>
-    <head>
-        <title>Dịch vụ</title>
+<head>
 
-        <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dịch vụ khách sạn</title>
 
-            body{
-                margin:0;
-                font-family:"Segoe UI", Arial;
-                background:#f4f6f9;
-            }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-            /* Banner */
+<link rel="stylesheet" href="<%=ctx%>/assets/css/style.css">
 
-            .banner{
-                height:300px;
-                background:url("https://images.unsplash.com/photo-1566073771259-6a8506099945") center/cover;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                color:white;
-                font-size:36px;
-                font-weight:600;
-            }
+<style>
 
-            /* Container */
+/* Banner */
 
-            .container{
-                width:1100px;
-                margin:50px auto;
-            }
+.services-banner{
+height:380px;
+background:url("https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1400") center/cover;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:45px;
+font-weight:600;
+position:relative;
+}
 
-            /* Grid */
+.services-banner::after{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
+}
 
-            .grid{
-                display:grid;
-                grid-template-columns:repeat(3,1fr);
-                gap:25px;
-            }
+.services-banner h1{
+position:relative;
+}
 
-            /* Card */
+/* Section */
 
-            .card{
-                background:white;
-                border-radius:12px;
-                overflow:hidden;
-                box-shadow:0 5px 15px rgba(0,0,0,0.1);
-                transition:0.3s;
-            }
+.services-section{
+padding:80px 0;
+background:#f6f6f6;
+}
 
-            .card:hover{
-                transform:translateY(-8px);
-            }
+/* Card */
 
-            /* Image */
+.service-card{
+border:none;
+border-radius:12px;
+overflow:hidden;
+background:white;
+box-shadow:0 8px 22px rgba(0,0,0,0.12);
+transition:0.3s;
+}
 
-            .card img{
-                width:100%;
-                height:200px;
-                object-fit:cover;
-            }
+.service-card:hover{
+transform:translateY(-8px);
+}
 
-            /* Content */
+.service-card img{
+height:200px;
+object-fit:cover;
+}
 
-            .card-content{
-                padding:20px;
-            }
+.service-body{
+padding:18px;
+}
 
-            .card-content h3{
-                margin:0 0 10px;
-            }
+.service-title{
+font-size:20px;
+font-weight:600;
+margin-bottom:8px;
+}
 
-            .card-content p{
-                color:#666;
-                font-size:14px;
-            }
+.service-desc{
+font-size:14px;
+color:#666;
+}
 
-        </style>
+</style>
 
-    </head>
+</head>
 
-    <body>
+<body>
 
-        <div class="banner">
-            Dịch vụ khách sạn
-        </div>
+<!-- HEADER -->
+<jsp:include page="/includes/header.jsp"/>
 
-        <div class="container">
+<!-- Banner -->
 
-            <div class="grid">
+<div class="services-banner">
+<h1>Dịch vụ khách sạn</h1>
+</div>
 
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874">
-                    <div class="card-content">
-                        <h3>Spa & Massage</h3>
-                        <p>Thư giãn với dịch vụ spa cao cấp và liệu trình massage chuyên nghiệp.</p>
-                    </div>
-                </div>
+<!-- Services -->
 
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1554284126-aa88f22d8b74">
-                    <div class="card-content">
-                        <h3>Phòng Gym</h3>
-                        <p>Phòng tập hiện đại với đầy đủ thiết bị cho khách lưu trú.</p>
-                    </div>
-                </div>
+<section class="services-section">
 
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1572331165267-854da2b10ccc">
-                    <div class="card-content">
-                        <h3>Hồ bơi</h3>
-                        <p>Hồ bơi ngoài trời với không gian thư giãn và view tuyệt đẹp.</p>
-                    </div>
-                </div>
+<div class="container">
 
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5">
-                    <div class="card-content">
-                        <h3>Nhà hàng</h3>
-                        <p>Thưởng thức ẩm thực quốc tế và đặc sản địa phương.</p>
-                    </div>
-                </div>
+<div class="row g-4">
 
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511">
-                    <div class="card-content">
-                        <h3>Dịch vụ phòng</h3>
-                        <p>Room service 24/7 mang lại trải nghiệm tiện nghi cho khách.</p>
-                    </div>
-                </div>
+<!-- Spa -->
 
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4">
-                    <div class="card-content">
-                        <h3>Xe đưa đón</h3>
-                        <p>Dịch vụ đưa đón sân bay tiện lợi và nhanh chóng.</p>
-                    </div>
-                </div>
+<div class="col-md-4">
+<div class="card service-card">
+<img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&h=400&fit=crop">
+<div class="service-body">
+<div class="service-title">Spa & Massage</div>
+<p class="service-desc">
+Thư giãn với dịch vụ spa cao cấp và liệu trình massage chuyên nghiệp.
+</p>
+</div>
+</div>
+</div>
 
-            </div>
+<!-- Gym -->
 
-        </div>
+<div class="col-md-4">
+<div class="card service-card">
+<img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&h=400&fit=crop">
+<div class="service-body">
+<div class="service-title">Phòng Gym</div>
+<p class="service-desc">
+Phòng tập hiện đại với đầy đủ thiết bị cho khách lưu trú.
+</p>
+</div>
+</div>
+</div>
 
-    </body>
+<!-- Pool -->
+
+<div class="col-md-4">
+<div class="card service-card">
+<img src="https://images.unsplash.com/photo-1501117716987-c8e1ecb21007?w=600&h=400&fit=crop">
+<div class="service-body">
+<div class="service-title">Hồ bơi</div>
+<p class="service-desc">
+Hồ bơi ngoài trời với không gian thư giãn và view đẹp.
+</p>
+</div>
+</div>
+</div>
+
+<!-- Restaurant -->
+
+<div class="col-md-4">
+<div class="card service-card">
+<img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&h=400&fit=crop">
+<div class="service-body">
+<div class="service-title">Nhà hàng</div>
+<p class="service-desc">
+Thưởng thức ẩm thực quốc tế và đặc sản địa phương.
+</p>
+</div>
+</div>
+</div>
+
+<!-- Room Service -->
+
+<div class="col-md-4">
+<div class="card service-card">
+<img src="https://images.unsplash.com/photo-1560067174-8941a3a1f0a3?w=600&h=400&fit=crop">
+<div class="service-body">
+<div class="service-title">Dịch vụ phòng</div>
+<p class="service-desc">
+Room service 24/7 mang lại trải nghiệm tiện nghi cho khách.
+</p>
+</div>
+</div>
+</div>
+
+<!-- Shuttle -->
+
+<div class="col-md-4">
+<div class="card service-card">
+<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&h=400&fit=crop">
+<div class="service-body">
+<div class="service-title">Xe đưa đón</div>
+<p class="service-desc">
+Dịch vụ đưa đón sân bay tiện lợi và nhanh chóng.
+</p>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+<jsp:include page="/includes/footer.jsp"/>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 </html>

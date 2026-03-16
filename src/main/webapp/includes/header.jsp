@@ -5,15 +5,12 @@
 <nav class="navbar navbar-expand-lg shadow-sm" style="background-color: #0d6efd;">
     <div class="container">
 
-<!--        <a class="navbar-brand bg-white rounded p-1 d-flex align-items-center" href="<%=ctx%>/home">
-            <img src="<%=ctx%>/assets/img/logo.png" alt="Logo" style="height: 50px; width: auto; object-fit: contain;">
-        </a>-->
         <a class="navbar-brand d-flex align-items-center text-decoration-none" href="<%=ctx%>/home" style="gap: 10px;">
             <div class="bg-white rounded p-1" style="height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">
                 <img src="<%=ctx%>/assets/img/logo.png" alt="Logo" style="height: 40px; width: auto; object-fit: contain;">
             </div>
-            <span style="color: black; font-weight: 800; font-size: 22px; letter-spacing: 1px; text-transform: uppercase;">
-                MARRIOT HOTEL
+            <span style="color: white; font-weight: 800; font-size: 22px; letter-spacing: 1px; text-transform: uppercase;">
+                DANA HOTEL
             </span>
         </a>
 

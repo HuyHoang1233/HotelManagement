@@ -4,6 +4,7 @@ import com.khoana.hotelmanagement.model.Room;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
 import java.util.List;
 
 public class RoomDAO extends DBContext {
@@ -105,16 +106,16 @@ public class RoomDAO extends DBContext {
         }
     }
 
-    // ĐÃ FIX: Truyền thêm tham số null thứ 5 cho biến sort
+    // ĐÃ FIX: Truyền 6 tham số null cho khớp với hàm dưới
     public List<Room> searchAvailableRoom(String checkIn, String checkOut) {
-        return searchAdvancedRooms(checkIn, checkOut, null, null, null);
+        return searchAdvancedRooms(checkIn, checkOut, null, null, null, null);
     }
 
     // =========================================================
-    // HÀM LỌC PHÒNG NÂNG CAO CÓ KÈM SẮP XẾP (Chuẩn 100%)
+    // HÀM LỌC PHÒNG NÂNG CAO TỔNG HỢP (CHUẨN 100%)
     // =========================================================
-    // ĐÃ FIX: Thêm tham số String sort vào hàm
-    public List<Room> searchAdvancedRooms(String checkIn, String checkOut, String priceMin, String priceMax, String sort) {
+    // ĐÃ FIX: Thêm tham số mảng String[] roomTypes vào cuối
+    public List<Room> searchAdvancedRooms(String checkIn, String checkOut, String priceMin, String priceMax, String sort, String[] roomTypes) {
         List<Room> list = new ArrayList<>();
 
         StringBuilder sql = new StringBuilder(
@@ -139,16 +140,38 @@ public class RoomDAO extends DBContext {
         }
 
         // ==========================================
-        // ĐOẠN ĐƯỢC THÊM VÀO ĐỂ XỬ LÝ SẮP XẾP GIÁ
+        // ĐOẠN XỬ LÝ LỌC THEO LOẠI PHÒNG (CHECKBOX)
+        // ==========================================
+        if (roomTypes != null && roomTypes.length > 0) {
+            sql.append("AND r.typeID IN (");
+            for (int i = 0; i < roomTypes.length; i++) {
+                if (roomTypes[i].equals("single")) {
+                    sql.append("1");
+                } else if (roomTypes[i].equals("double")) {
+                    sql.append("2");
+                } else if (roomTypes[i].equals("suite")) {
+                    sql.append("3");
+                } else {
+                    sql.append("0");
+                }
+
+                if (i < roomTypes.length - 1) {
+                    sql.append(", ");
+                }
+            }
+            sql.append(") ");
+        }
+
+        // ==========================================
+        // ĐOẠN XỬ LÝ SẮP XẾP GIÁ
         // ==========================================
         if (sort != null && !sort.isEmpty()) {
             if (sort.equals("price_asc")) {
-                sql.append("ORDER BY r.price ASC "); // ASC: Tăng dần (Từ thấp đến cao)
+                sql.append("ORDER BY r.price ASC ");
             } else if (sort.equals("price_desc")) {
-                sql.append("ORDER BY r.price DESC "); // DESC: Giảm dần (Từ cao đến thấp)
+                sql.append("ORDER BY r.price DESC ");
             }
         }
-        // ==========================================
 
         try {
             PreparedStatement st = connection.prepareStatement(sql.toString());

@@ -3,16 +3,23 @@ document.addEventListener("DOMContentLoaded", function () {
   const rooms = [
     {
       image: contextPath + "/assets/img/room-1.jpg",
-      title: "Studio Partial Sea View & City View",
+      title: "Phòng Đơn",
       guest: "👤 2 người",
-      size: "📐 33m²"
+      size: "📐 30m²"
     },
     {
       image: contextPath + "/assets/img/room-2.jpg",
-      title: "Deluxe Partial Sea View",
+      title: "Phòng đôi",
       guest: "👤 2 người",
       size: "📐 30m²"
-    }
+    },
+
+    {
+      image: contextPath + "/assets/img/room-3.jpg",
+      title: "Phòng Suite",
+      guest: "👤 2 người",
+      size: "📐 30m²"
+    }      
   ];
 
   const img = document.getElementById("stayImage");
