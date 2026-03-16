@@ -17,20 +17,21 @@ public class SearchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Nhận thông số từ giao diện (Bao gồm cả tham số sắp xếp)
+        // 1. Nhận thông số từ giao diện 
         String checkin = request.getParameter("checkin");
         String checkout = request.getParameter("checkout");
         String priceMin = request.getParameter("priceMin");
         String priceMax = request.getParameter("priceMax");
-
-        // ĐÃ FIX: Lấy thêm tham số sắp xếp từ Dropdown
         String sort = request.getParameter("sort");
+
+        // ĐOẠN QUAN TRỌNG ĐỂ LỌC PHÒNG ĐƠN/ĐÔI: Lấy mảng các Checkbox "Loại phòng"
+        String[] roomTypes = request.getParameterValues("roomType");
 
         // 2. Gọi DAO chui xuống DB lấy phòng
         RoomDAO roomDAO = new RoomDAO();
 
-        // ĐÃ FIX: Truyền đủ 5 tham số (kèm biến sort) xuống cho DAO
-        List<Room> roomList = roomDAO.searchAdvancedRooms(checkin, checkout, priceMin, priceMax, sort);
+        // ĐÃ FIX: Truyền đủ 6 tham số (kèm mảng roomTypes) xuống cho DAO
+        List<Room> roomList = roomDAO.searchAdvancedRooms(checkin, checkout, priceMin, priceMax, sort, roomTypes);
 
         // 3. Đóng gói dữ liệu gửi sang JSP
         request.setAttribute("rooms", roomList);
@@ -38,11 +39,17 @@ public class SearchServlet extends HttpServlet {
         request.setAttribute("checkout", checkout);
         request.setAttribute("priceMin", priceMin);
         request.setAttribute("priceMax", priceMax);
-
-        // ĐÃ FIX: Trả biến sort về JSP để giữ nguyên trạng thái Dropdown hiển thị
         request.setAttribute("sort", sort);
 
-        // 4. Chuyển hướng
+        // 4. LƯU LẠI TRẠNG THÁI CHECKBOX: Để khi load lại trang, các ô khách vừa tích không bị mất dấu check
+        if (roomTypes != null) {
+            for (String type : roomTypes) {
+                // Nó sẽ tạo ra các biến check_single, check_double, check_suite
+                request.setAttribute("check_" + type, "checked");
+            }
+        }
+
+        // 5. Chuyển hướng
         request.getRequestDispatcher("/search.jsp").forward(request, response);
     }
 

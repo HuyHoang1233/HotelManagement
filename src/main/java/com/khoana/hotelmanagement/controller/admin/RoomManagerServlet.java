@@ -67,10 +67,30 @@ public class RoomManagerServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/admin/rooms");
                 break;
             default:
-                // Mặc định luôn tải danh sách (khớp với attribute ${listRooms} trong trang room-list.jsp)
-                List<Room> listRooms = dao.getAllRooms();
-                request.setAttribute("listRooms", listRooms);
-                request.getRequestDispatcher("/admin/room-list.jsp").forward(request, response);
+                List<Room> roomList = dao.getAllRooms();
+                request.setAttribute("roomList", roomList);
+                
+                int totalRooms = roomList.size();
+                int availableRooms = 0;
+                int bookedRooms = 0;
+                int maintenanceRooms = 0;
+                
+                for (Room r : roomList) {
+                    if ("Available".equalsIgnoreCase(r.getStatus())) {
+                        availableRooms++;
+                    } else if ("Occupied".equalsIgnoreCase(r.getStatus()) || "Booked".equalsIgnoreCase(r.getStatus())) {
+                        bookedRooms++;
+                    } else {
+                        maintenanceRooms++;
+                    }
+                }
+                
+                request.setAttribute("totalRooms", totalRooms);
+                request.setAttribute("availableRooms", availableRooms);
+                request.setAttribute("bookedRooms", bookedRooms);
+                request.setAttribute("maintenanceRooms", maintenanceRooms);
+
+                request.getRequestDispatcher("/admin/admin_room_form.jsp").forward(request, response);
                 break;
         }
     }

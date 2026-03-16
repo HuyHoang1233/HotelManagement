@@ -45,13 +45,14 @@ public class UserManagerServlet extends HttpServlet {
                 }
             } else {
                 // Lấy danh sách user và đẩy sang trang JSP cho Frontend hiển thị
-                List<User> listUsers = dao.getAllUsers();
-                request.setAttribute("listUsers", listUsers);
-                request.getRequestDispatcher("/admin/user-list.jsp").forward(request, response);
+                List<User> userList = dao.getAllUsers();
+                request.setAttribute("userList", userList);
+                request.getRequestDispatcher("/admin/admin_user_manager.jsp").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "/admin/users");
+            // Xử lý lỗi in ra màn hình chứ không redirect lại trang hiện tại (tránh loop)
+            response.getWriter().println("System Error: " + e.getMessage());
         }
     }
 
