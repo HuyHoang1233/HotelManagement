@@ -23,8 +23,8 @@
             <div class="hero-overlay"></div>
 
             <div class="hero-content">
-                <h1>Marriot Hotel</h1>
-                <p>Nghỉ dưỡng hiện đại - dịch vụ tận tâm</p>
+                <h1>DaNa Hotel</h1>
+                <p>Relax, Recharge, Rediscover Da Nang.</p>
 
                 <form class="hero-search" action="<%=ctx%>/search" method="get">
                     <div class="hs-grid">
@@ -48,7 +48,7 @@
                 <div class="about-text">
                     <h2 class="section-title">Về chúng tôi</h2>
                     <p>
-                        Hotel mang đến trải nghiệm lưu trú hiện đại, tinh tế và tiện nghi.
+                        DaNa Hotel mang đến trải nghiệm lưu trú hiện đại, tinh tế và tiện nghi.
                         Vị trí thuận lợi, phòng ốc sạch đẹp, cùng đội ngũ nhân viên thân thiện.
                     </p>
                     <p>
@@ -66,7 +66,7 @@
 
         <section class="section">
             <div class="container">
-                <h2 class="section-title center">Lưu trú</h2>
+                <h2 class="section-title center">Rooms</h2>
 
                 <div class="stay">
                     <div class="stay-media">
@@ -79,13 +79,13 @@
                     </div>
 
                     <div class="stay-card">
-                        <h3 id="stayTitle">Studio Partial Sea View &amp; City View</h3>
+                        <h3 id="stayTitle">Phòng đơn</h3>
                         <div class="stay-line"></div>
 
                         <div class="stay-meta">
                             <span id="stayGuest">👤 2 người</span>
                             <span class="stay-sep">|</span>
-                            <span id="staySize">📐 33m²</span>
+                            <span id="staySize">📐 30m²</span>
                         </div>
                     </div>
                 </div>
@@ -93,6 +93,7 @@
                     <div class="stay-pager">
                         <button type="button" class="stay-page active" data-index="0">1</button>
                         <button type="button" class="stay-page" data-index="1">2</button>
+                        <button type="button" class="stay-page" data-index="1">3</button>
                     </div>
 
                     <a class="stay-all" href="<%=ctx%>/rooms.jsp">Xem tất cả</a>
@@ -102,17 +103,15 @@
 
         <section class="section">
             <div class="container">
-                <h2 class="section-title center">Nhà hàng tại Hotel</h2>
+                <h2 class="section-title center">Restaurant</h2>
 
                 <div class="full-slider">
-                    <button class="nav-arrow left" type="button" aria-label="Prev">‹</button>
 
                     <div class="full-slide">
                         <img src="<%=ctx%>/assets/img/restaurant-1.jpg" alt="Restaurant" />
                         <div class="full-caption">Restaurant</div>
                     </div>
 
-                    <button class="nav-arrow right" type="button" aria-label="Next">›</button>
                 </div>
 
                 <div class="center mt-24">
@@ -215,9 +214,8 @@
                         <div class="review-quote">“</div>
 
                         <p class="review-text">
-                            Awaken is the perfect combination of dedicated service and modern design.
-                            The friendly and enthusiastic staff created a cozy space for my travel.
-                            I was delighted with the convenient amenities and attentiveness in meeting all my requests.
+                            DaNa Hotel mang đến không gian nghỉ ngơi sạch sẽ, thoải mái với phòng ốc gọn gàng và đầy đủ tiện nghi.
+                            Nhân viên thân thiện, phục vụ nhiệt tình, tạo cảm giác dễ chịu cho khách lưu trú.
                         </p>
 
                         <div class="review-footer">
@@ -225,7 +223,7 @@
                                 <img class="review-avatar" src="${pageContext.request.contextPath}/assets/img/u1.jpg" alt="Tuan Nguyen">
                                 <div class="review-userinfo">
                                     <div class="review-name">Tuan Nguyen</div>
-                                    <div class="review-source">From Tripadvisor</div>
+                                    <div class="review-source">From Facebook</div>
                                 </div>
                             </div>
 
@@ -237,9 +235,10 @@
                         <div class="review-quote">“</div>
 
                         <p class="review-text">
-                            The rooms at the Awaken are spacious, clean, and the amenities are smartly laid out.
-                            I was really impressed with the attention to detail, from the decoration to the amenities in the room.
-                            The bed is soft and the sleep quality is excellent, helping me to have a deep and relaxing sleep.
+                            DaNa Hotel là khách sạn có không gian sạch sẽ, thoải mái và đầy đủ tiện nghi. 
+                            Nhân viên phục vụ nhiệt tình, thân thiện và luôn sẵn sàng hỗ trợ khách hàng. 
+                            Khách sạn có vị trí thuận lợi, dễ dàng di chuyển đến các địa điểm tham quan và ăn uống. 
+                            Đây là một lựa chọn phù hợp cho du khách khi đến lưu trú.
                         </p>
 
                         <div class="review-footer">
@@ -259,9 +258,10 @@
                         <div class="review-quote">“</div>
 
                         <p class="review-text">
-                            Another commendable point is the hotel's restaurant. The breakfast is varied and delicious,
-                            giving me a truly special feeling every morning. I also tried the food at the restaurant during my stay
-                            and really liked the food here. I will return one day soon.
+                            DaNa Hotel mang đến trải nghiệm lưu trú dễ chịu với phòng ốc gọn gàng và không gian yên tĩnh. 
+                            Dịch vụ tại khách sạn khá tốt, nhân viên luôn hỗ trợ khách một cách nhanh chóng. 
+                            Vị trí khách sạn thuận tiện cho việc di chuyển trong thành phố. 
+                            Mức giá hợp lý nên phù hợp với nhiều du khách.
                         </p>
 
                         <div class="review-footer">

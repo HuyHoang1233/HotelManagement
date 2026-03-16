@@ -30,7 +30,7 @@
 
     <div class="about-hero-overlay">
         <div class="container">
-            <h1>Hotel</h1>
+            <h1>DaNa Hotel</h1>
             <p>Không gian nghỉ dưỡng hiện đại - dịch vụ tận tâm - trải nghiệm đáng nhớ</p>
         </div>
     </div>
