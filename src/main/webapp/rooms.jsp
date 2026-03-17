@@ -133,6 +133,7 @@ color:white;
 <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&h=400&fit=crop">
 <div class="room-body">
 <div class="room-title">Phòng Deluxe - 101</div>
+<div class="room-title">Phòng Deluxe</div>
 <p>Phòng đơn tiện nghi cho 2 người.</p>
 <div class="d-flex justify-content-between align-items-center">
 <div class="room-price">500.000đ / đêm</div>
@@ -149,6 +150,8 @@ color:white;
 <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&h=400&fit=crop">
 <div class="room-body">
 <div class="room-title">Phòng Deluxe - 102</div>
+=======
+<div class="room-title">Phòng Deluxe</div>
 <p>Phòng đơn view đẹp.</p>
 <div class="d-flex justify-content-between align-items-center">
 <div class="room-price">800.000đ / đêm</div>
@@ -165,6 +168,7 @@ color:white;
 <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b">
 <div class="room-body">
 <div class="room-title">Suite - 201</div>
+<div class="room-title">Suite</div>
 <p>Phòng suite rộng rãi.</p>
 <div class="d-flex justify-content-between align-items-center">
 <div class="room-price">1.500.000đ / đêm</div>
@@ -181,6 +185,8 @@ color:white;
 <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&h=400&fit=crop">
 <div class="room-body">
 <div class="room-title">Suite - 202</div>
+=======
+<div class="room-title">Suite</div>
 <p>Phòng suite cao cấp.</p>
 <div class="d-flex justify-content-between align-items-center">
 <div class="room-price">2.000.000đ / đêm</div>
@@ -197,6 +203,8 @@ color:white;
 <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600&h=400&fit=crop">
 <div class="room-body">
 <div class="room-title">Luxury Suite - 301</div>
+=======
+<div class="room-title">Luxury Suite</div>
 <p>Phòng hạng sang.</p>
 <div class="d-flex justify-content-between align-items-center">
 <div class="room-price">3.500.000đ / đêm</div>
@@ -213,6 +221,8 @@ color:white;
 <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&h=400&fit=crop">
 <div class="room-body">
 <div class="room-title">Luxury Suite - 302</div>
+=======
+<div class="room-title">Luxury Suite</div>
 <p>Phòng suite sang trọng.</p>
 <div class="d-flex justify-content-between align-items-center">
 <div class="room-price">5.000.000đ / đêm</div>
