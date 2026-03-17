@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% String ctx = request.getContextPath();%>
 
-<nav class="navbar navbar-expand-lg shadow-sm" style="background-color: #0d6efd;">
+<nav class="navbar navbar-expand-lg shadow-sm" style="background-color: #1a6eb5;">
     <div class="container">
 
         <a class="navbar-brand d-flex align-items-center text-decoration-none" href="<%=ctx%>/home" style="gap: 10px;">

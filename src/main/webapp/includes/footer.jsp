@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <% String ctx = request.getContextPath();%>
 
-<footer class="bg-dark text-light pt-5 pb-3 mt-5 shadow-lg">
+<footer class="bg-dark text-light pt-5 pb-3 mt-5 shadow-lg"style="background-color: #1a6eb5 !important;">
     <div class="container">
         <div class="row">
 
@@ -17,7 +17,7 @@
                 <p class="mb-2"><i class="fas fa-building me-3 text-secondary"></i> DaNa Hotel</p>
                 <p class="mb-2"><i class="fas fa-map-marker-alt me-3 text-secondary"></i> Ngũ Hành Sơn, Đà Nẵng</p>
                 <p class="mb-2"><i class="fas fa-phone-alt me-3 text-secondary"></i> 083 273 6689</p>
-                <p class="mb-2"><i class="fas fa-envelope me-3 text-secondary"></i> info@marriott.com</p>
+                <p class="mb-2"><i class="xfas fa-envelope me-3 text-secondary"></i> info@danahotel.com</p>
             </div>
 
             <div class="col-md-4 col-lg-4 mb-4">

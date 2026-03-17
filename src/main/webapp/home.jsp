@@ -66,7 +66,7 @@
 
         <section class="section">
             <div class="container">
-                <h2 class="section-title center">Phòng</h2>
+                <h2 class="section-title center">Rooms</h2>
 
                 <div class="stay">
                     <div class="stay-media">
@@ -103,13 +103,13 @@
 
         <section class="section">
             <div class="container">
-                <h2 class="section-title center">Nhà hàng</h2>
+                <h2 class="section-title center">Restaurant</h2>
 
                 <div class="full-slider">
 
                     <div class="full-slide">
                         <img src="<%=ctx%>/assets/img/restaurant-1.jpg" alt="Restaurant" />
-                        <div class="full-caption">Nhà hàng</div>
+                        <div class="full-caption">Restaurant</div>
                     </div>
 
                 </div>
