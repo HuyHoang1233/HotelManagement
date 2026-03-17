@@ -7,7 +7,7 @@
 
             <div class="col-md-4 col-lg-4 mb-4 text-center text-md-start">
                 <img src="<%=ctx%>/assets/img/logo.png" alt="Logo" class="bg-white rounded p-2 mb-3" style="height: 80px; width: auto; object-fit: contain;">
-                <p class="text-secondary small mt-2">
+                <p class="text-secondary small mt-2 text-light">
                     Khách sạn sang trọng bậc nhất tại Đà Nẵng, mang đến trải nghiệm lưu trú đẳng cấp và dịch vụ hoàn hảo.
                 </p>
             </div>
@@ -34,8 +34,8 @@
         <hr class="border-secondary my-4">
 
         <div class="row text-center text-md-start">
-            <div class="col-md-12 text-secondary small">
-                © 2026 Marriott Hotel. All Rights Reserved.
+            <div class="col-md-12 text-secondary small text-light">
+                © 2026 DaNa Hotel. All Rights Reserved.
             </div>
         </div>
     </div>
