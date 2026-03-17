@@ -21,7 +21,7 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-semibold">
                 <li class="nav-item"><a class="nav-link text-white px-3" href="<%=ctx%>/restaurant.jsp">Nhà hàng</a></li>
-                <li class="nav-item"><a class="nav-link text-white px-3" href="<%=ctx%>/rooms.jsp">Lưu trú</a></li>
+                <li class="nav-item"><a class="nav-link text-white px-3" href="<%=ctx%>/search">Lưu trú</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3" href="<%=ctx%>/meeting.jsp">Hội nghị</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3" href="<%=ctx%>/services.jsp">Dịch vụ</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3" href="<%=ctx%>/promotion.jsp">Khuyến mãi</a></li>
@@ -61,6 +61,17 @@
                                 <li><a class="dropdown-item text-danger" href="<%=ctx%>/logout"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a></li>
                             </ul>
                         </div>
+                        <a href="<%=ctx%>/wishlist" class="nav-link text-white position-relative me-3" title="Danh sách yêu thích">
+                            <i class="fas fa-heart fs-4"></i>
+                            <%-- Nếu muốn hiện số lượng phòng đã lưu, bạn có thể truyền biến wishlistSize từ Servlet --%>
+                            <c:if test="${not empty wishlistSize && wishlistSize > 0}">
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+                                    ${wishlistSize}
+                                </span>
+                            </c:if>
+                        </a>
+
+                        <span class="text-white fw-bold me-3">Hi, ${sessionScope.account.fullName != null ? sessionScope.account.fullName : sessionScope.account.username}</span>
 
                         <%-- HIỆN NÚT QUẢN TRỊ NẾU LÀ ADMIN (roleID = 1) --%>
                         <c:if test="${sessionScope.account.roleID == 1}">

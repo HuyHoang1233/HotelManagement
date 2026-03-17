@@ -6,7 +6,7 @@
 <html lang="vi">
     <head>
         <meta charset="UTF-8">
-        <title>Quản Lý Phòng - Marriott Admin</title>
+        <title>Quản Lý Phòng - DANA Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
@@ -46,7 +46,7 @@
     <body>
         <div class="d-flex">
             <div class="sidebar" style="width: 250px;">
-                <div class="brand"><i class="fas fa-hotel text-warning me-2"></i> MARRIOTT ADMIN</div>
+                <div class="brand"><i class="fas fa-hotel text-warning me-2"></i> DANA ADMIN</div>
                 <a href="<%=ctx%>/admin/admin_dashboard.jsp"><i class="fas fa-tachometer-alt me-2"></i> Tổng quan</a>
                 <a href="<%=ctx%>/admin/room-manager" class="active"><i class="fas fa-bed me-2"></i> Quản lý Phòng</a>
                 <a href="<%=ctx%>/admin/admin_booking_manager.jsp"><i class="fas fa-calendar-check me-2"></i> Quản lý Đặt phòng</a>

@@ -7,6 +7,9 @@ public class User {
     private String email;
     private String password;
     private int roleID;
+    private String phone;
+    private String status;
+    
 
     public User() {
     }
@@ -57,5 +60,21 @@ public class User {
 
     public void setRoleID(int roleID) {
         this.roleID = roleID;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

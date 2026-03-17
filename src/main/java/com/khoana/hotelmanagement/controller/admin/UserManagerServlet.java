@@ -16,11 +16,10 @@ public class UserManagerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            
-        // Nhận action từ giao diện gửi lên (nếu không có thì mặc định là list)
+
         String action = request.getParameter("action");
         if (action == null) {
-            action = "list"; 
+            action = "list";
         }
 
         UserDAO dao = new UserDAO();
@@ -67,10 +66,10 @@ public class UserManagerServlet extends HttpServlet {
                 User newUser = new User();
                 newUser.setFullName(request.getParameter("fullName"));
                 newUser.setEmail(request.getParameter("email"));
-                newUser.setPassword(request.getParameter("password")); // Hash if needed
+                newUser.setPassword(request.getParameter("password"));
                 newUser.setRoleID(Integer.parseInt(request.getParameter("roleID")));
                 if (dao.checkEmailExist(newUser.getEmail())) {
-                   request.getSession().setAttribute("error", "Email đã tồn tại trong hệ thống!");
+                    request.getSession().setAttribute("error", "Email đã tồn tại trong hệ thống!");
                 } else {
                     dao.insertUserAdmin(newUser);
                 }
@@ -80,20 +79,23 @@ public class UserManagerServlet extends HttpServlet {
                 user.setId(Integer.parseInt(request.getParameter("id")));
                 user.setFullName(request.getParameter("fullName"));
                 user.setEmail(request.getParameter("email"));
-                user.setPassword(request.getParameter("password")); // Hash if needed
+                user.setPassword(request.getParameter("password"));
                 user.setRoleID(Integer.parseInt(request.getParameter("roleID")));
                 dao.updateUserProfile(user);
                 response.sendRedirect(request.getContextPath() + "/admin/users");
             } else if ("delete".equals(action)) {
                 int delId = Integer.parseInt(request.getParameter("id"));
                 dao.deleteUser(delId);
-                // Xóa xong thì chuyển hướng lại trang danh sách
                 response.sendRedirect(request.getContextPath() + "/admin/users");
             } else if ("changeRole".equals(action)) {
                 int userId = Integer.parseInt(request.getParameter("id"));
                 int newRole = Integer.parseInt(request.getParameter("role"));
                 dao.changeUserRole(userId, newRole);
-                // Đổi quyền xong thì chuyển hướng lại trang danh sách
+                response.sendRedirect(request.getContextPath() + "/admin/users");
+            } else if ("toggleStatus".equals(action)) {
+                int userId = Integer.parseInt(request.getParameter("id"));
+                String newStatus = request.getParameter("newStatus");
+                dao.updateUserStatus(userId, newStatus);
                 response.sendRedirect(request.getContextPath() + "/admin/users");
             } else {
                 doGet(request, response);

@@ -26,27 +26,33 @@ import java.util.*;
 @WebServlet(name = "BookingServlet", urlPatterns = {"/booking"})
 public class BookingServlet extends HttpServlet {
 
-    // ĐÃ FIX: Hàm doGet để lấy thông tin phòng và hiện cái Form Đặt Phòng cho khách điền ngày
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String roomIdStr = request.getParameter("roomId");
         if (roomIdStr != null && !roomIdStr.isEmpty()) {
-            RoomDAO roomDAO = new RoomDAO();
-            Room room = roomDAO.getRoomByID(Integer.parseInt(roomIdStr));
-            request.setAttribute("room", room);
-            request.getRequestDispatcher("/booking.jsp").forward(request, response);
+            try {
+                RoomDAO roomDAO = new RoomDAO();
+                Room room = roomDAO.getRoomByID(Integer.parseInt(roomIdStr));
+                if (room != null) {
+                    request.setAttribute("room", room);
+                    request.getRequestDispatcher("/booking.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/search");
+                }
+            } catch (NumberFormatException e) {
+                response.sendRedirect(request.getContextPath() + "/search");
+            }
         } else {
-            response.sendRedirect(request.getContextPath() + "/home");
+            response.sendRedirect(request.getContextPath() + "/search");
         }
     }
 
-    // Hàm doPost xử lý khi khách bấm nút "Xác Nhận Đặt Phòng"
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Kiểm tra xem người dùng đã login chưa
+        request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute("account");
 
@@ -56,19 +62,23 @@ public class BookingServlet extends HttpServlet {
         }
 
         try {
-            // 2. ĐÃ FIX: Đổi lại tên tham số cho khớp chuẩn với form ở booking.jsp
             int roomID = Integer.parseInt(request.getParameter("roomId"));
             String checkInStr = request.getParameter("checkin");
             String checkoutStr = request.getParameter("checkout");
 
-            // 3. LOGIC TÍNH TIỀN: Tính số ngày lưu trú
             LocalDate checkInDate = LocalDate.parse(checkInStr);
             LocalDate checkOutDate = LocalDate.parse(checkoutStr);
+            LocalDate today = LocalDate.now();
+
+            // FIX: Chặn đặt phòng trong quá khứ
+            if (checkInDate.isBefore(today)) {
+                response.sendRedirect(request.getContextPath() + "/detail?roomId=" + roomID + "&error=past_date");
+                return;
+            }
 
             long daysBetween = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
             if (daysBetween <= 0) {
-                // Ngày trả phòng không hợp lệ (trước hoặc bằng ngày nhận)
-                response.sendRedirect(request.getContextPath() + "/home.jsp?error=invalid_date");
+                response.sendRedirect(request.getContextPath() + "/detail?roomId=" + roomID + "&error=invalid_date");
                 return;
             }
 
@@ -76,7 +86,6 @@ public class BookingServlet extends HttpServlet {
             Room room = roomDAO.getRoomByID(roomID);
             double totalPrice = daysBetween * room.getPrice();
 
-            // 4. Đóng gói dữ liệu vào Model và Lưu DB
             Booking newBooking = new Booking();
             newBooking.setUserID(currentUser.getId());
             newBooking.setRoomID(roomID);
@@ -88,21 +97,16 @@ public class BookingServlet extends HttpServlet {
             BookingDAO bookingDAO = new BookingDAO();
             boolean isSuccess = bookingDAO.insertBooking(newBooking);
 
-            // 5. Điều hướng kết quả: Thêm gửi Email và tạo link VNPay
             if (isSuccess) {
-                // --- 5.1: Gửi Email Bằng Giao Diện HTML Xịn Xò ---
-                String userEmail = currentUser.getEmail();
-                if (userEmail != null && !userEmail.trim().isEmpty() && userEmail.contains("@")) {
-                    try {
-                        String roomName = "Phòng " + room.getRoomNumber();
-                        EmailUtils.sendBookingConfirmEmail(userEmail, currentUser.getFullName(), roomName, checkInStr, checkoutStr, totalPrice);
-                    } catch (Exception e) {
-                        System.out.println("Lỗi gửi email cho: " + userEmail);
-                        e.printStackTrace();
-                    }
+                // 1. Gửi Email thông báo (Chạy ngầm hoặc bọc try-catch để không làm treo thanh toán)
+                try {
+                    EmailUtils.sendBookingConfirmEmail(currentUser.getEmail(), currentUser.getFullName(),
+                            "Phòng " + room.getRoomNumber(), checkInStr, checkoutStr, totalPrice);
+                } catch (Exception e) {
+                    System.err.println("Email service error: " + e.getMessage());
                 }
 
-                // --- 5.2: Chuẩn bị thông số gửi sang VNPay ---
+                // 2. VNPay Payment Integration
                 int latestBookingID = bookingDAO.getLatestBookingID(currentUser.getId());
                 long amount = (long) (totalPrice * 100);
                 String vnp_TxnRef = Config.getRandomNumber(8);
@@ -114,13 +118,12 @@ public class BookingServlet extends HttpServlet {
                 vnp_Params.put("vnp_Amount", String.valueOf(amount));
                 vnp_Params.put("vnp_CurrCode", "VND");
                 vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
-                vnp_Params.put("vnp_OrderInfo", String.valueOf(latestBookingID));
+                vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + latestBookingID);
                 vnp_Params.put("vnp_OrderType", "other");
                 vnp_Params.put("vnp_Locale", "vn");
                 vnp_Params.put("vnp_ReturnUrl", Config.vnp_ReturnUrl);
                 vnp_Params.put("vnp_IpAddr", Config.getIpAddress(request));
 
-                // --- 5.3: Cấu hình thời gian giao dịch ---
                 Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
                 vnp_Params.put("vnp_CreateDate", formatter.format(cld.getTime()));
@@ -128,40 +131,36 @@ public class BookingServlet extends HttpServlet {
                 cld.add(Calendar.MINUTE, 15);
                 vnp_Params.put("vnp_ExpireDate", formatter.format(cld.getTime()));
 
-                // --- 5.4: Băm mã bảo mật và tạo URL ---
-                List fieldNames = new ArrayList(vnp_Params.keySet());
+                // FIX: Ép kiểu List tường minh để tránh lỗi compile
+                List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
                 Collections.sort(fieldNames);
+
                 StringBuilder hashData = new StringBuilder();
                 StringBuilder query = new StringBuilder();
-                Iterator itr = fieldNames.iterator();
-                while (itr.hasNext()) {
-                    String fieldName = (String) itr.next();
-                    String fieldValue = (String) vnp_Params.get(fieldName);
+                for (String fieldName : fieldNames) {
+                    String fieldValue = vnp_Params.get(fieldName);
                     if ((fieldValue != null) && (fieldValue.length() > 0)) {
                         hashData.append(fieldName).append('=').append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
                         query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString())).append('=').append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
-                        if (itr.hasNext()) {
+                        if (!fieldName.equals(fieldNames.get(fieldNames.size() - 1))) {
                             query.append('&');
                             hashData.append('&');
                         }
                     }
                 }
 
-                String queryUrl = query.toString();
                 String vnp_SecureHash = Config.hmacSHA512(Config.vnp_HashSecret, hashData.toString());
-                queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
-                String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
+                String paymentUrl = Config.vnp_PayUrl + "?" + query.toString() + "&vnp_SecureHash=" + vnp_SecureHash;
 
-                // --- BƯỚC 5.5: Đá văng khách sang trang của VNPay ---
                 response.sendRedirect(paymentUrl);
 
             } else {
-                response.sendRedirect(request.getContextPath() + "/home.jsp?error=booking_failed");
+                response.sendRedirect(request.getContextPath() + "/search?error=booking_failed");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "/home.jsp?error=invalid_data");
+            response.sendRedirect(request.getContextPath() + "/search?error=invalid_data");
         }
     }
 }

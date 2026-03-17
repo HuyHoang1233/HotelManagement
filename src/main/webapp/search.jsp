@@ -149,6 +149,7 @@
                                             <div class="d-grid gap-2">
                                                 <a href="<%=ctx%>/detail?roomId=${room.roomID}" class="btn btn-outline-primary fw-bold">Xem Chi Tiết</a>
                                                 <a href="<%=ctx%>/booking?roomId=${room.roomID}" class="btn btn-primary fw-bold">Đặt Ngay</a>
+                                                <a href="<%=ctx%>/wishlist?action=toggle&roomId=${room.roomID}" class="btn btn-outline-danger fw-bold"><i class="far fa-heart"></i> Lưu Yêu Thích</a>
                                             </div>
                                         </div>
                                     </div>
