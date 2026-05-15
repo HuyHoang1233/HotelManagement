@@ -6,69 +6,63 @@
 [![Tomcat](https://img.shields.io/badge/Server-Tomcat%209-yellow.svg)](https://tomcat.apache.org/)
 
 ## 📝 Giới thiệu
-Đây là dự án ứng dụng Web Quản lý Khách sạn được xây dựng bằng công nghệ **Java Servlet**, **JSP** và cơ sở dữ liệu **Microsoft SQL Server**. Hệ thống hỗ trợ quản lý đặt phòng, tìm kiếm và quản lý phòng trống, tích hợp thanh toán trực tuyến qua cổng **VNPay**, và tự động gửi email xác nhận cho khách hàng.
+Dự án Web Quản lý Khách sạn cao cấp được xây dựng trên nền tảng **Java Servlet/JSP**. Hệ thống giải quyết trọn vẹn quy trình từ tìm kiếm phòng, đặt phòng trực tuyến, thanh toán điện tử cho đến xác nhận dịch vụ tự động, mang lại trải nghiệm chuyên nghiệp cho người dùng.
 
 ---
 
-## 🛠 Công nghệ sử dụng
+## 🚀 Hệ thống Chức năng Đầy đủ
+
+### 1. Chức năng dành cho Khách hàng (Frontend)
+*   🔍 **Tìm kiếm phòng nâng cao:** Tìm kiếm theo ngày nhận/trả phòng, số lượng khách và loại phòng.
+*   🖼 **Xem chi tiết phòng:** Hiển thị hình ảnh, mô tả, tiện nghi và giá phòng thời gian thực.
+*   📅 **Đặt phòng trực tuyến:** Quy trình đặt phòng nhanh chóng với các bước nhập thông tin tối giản.
+*   💳 **Thanh toán VNPay:** Tích hợp cổng thanh toán quốc gia, hỗ trợ thanh toán qua ATM, thẻ quốc tế và QR Code.
+*   📩 **Xác nhận qua Email:** Tự động gửi mail thông báo chi tiết đơn đặt phòng ngay sau khi giao dịch thành công.
+*   📜 **Lịch sử giao dịch:** Khách hàng có thể theo dõi lại các đơn đặt phòng đã thực hiện.
+
+### 2. Chức năng Quản trị (Backend Logic)
+*   📊 **Quản lý trạng thái phòng:** Hệ thống tự động khóa phòng khi có người đặt, tránh tình trạng "Overbooking".
+*   💰 **Tính toán doanh thu:** Tự động tính toán tổng tiền, thuế và các chi phí phát sinh.
+*   🛠 **Cấu hình hệ thống:** Quản lý danh mục loại phòng, giá cả và các chính sách của khách sạn.
+
+### 3. Đặc điểm Kỹ thuật nổi bật
+*   **Kiến trúc MVC:** Phân tách rõ rệt Controller, Service, DAO và View.
+*   **Bảo mật giao dịch:** Sử dụng thuật toán băm (Hash) để xác thực chữ ký số từ VNPay.
+*   **Xử lý bất đồng bộ:** Sử dụng Java Mail API chạy nền để không làm gián đoạn trải nghiệm người dùng.
+
+---
+
+## 🛠 Công nghệ & Thư viện sử dụng
 
 | Thành phần | Công nghệ / Thư viện |
 | :--- | :--- |
 | **Backend** | Java 8, Servlet, JSP, JSTL (Java EE 8) |
-| **Database** | Microsoft SQL Server |
-| **Build Tool** | Maven |
-| **Web Server** | Apache Tomcat 9 hoặc GlassFish |
-| **Thư viện Email** | `javax.mail` - Tự động gửi mail xác nhận |
-| **Xử lý JSON** | `gson` - Chuyển đổi dữ liệu linh hoạt |
-| **HTTP Client** | `fluent-hc` - Gọi API tích hợp cổng thanh toán |
+| **Database** | Microsoft SQL Server (DAO Pattern) |
+| **Payment** | VNPay Payment Gateway API |
+| **Email** | Java Mail API (javax.mail) |
+| **JSON** | Google Gson |
 
 ---
 
-## 💻 Yêu cầu hệ thống (Prerequisites)
-Để chạy được dự án này trên máy local, bạn cần cài đặt:
-*   **JDK:** 1.8 (Java 8)
-*   **Cơ sở dữ liệu:** Microsoft SQL Server (đã khởi chạy và cấu hình kết nối TCP/IP)
-*   **Công cụ build:** Apache Maven
-*   **IDE:** Khuyến nghị dùng NetBeans, IntelliJ IDEA, hoặc Eclipse
+## 💻 Hướng dẫn Khởi chạy
 
----
-
-## 🚀 Hướng dẫn cài đặt và khởi chạy (How to run)
-
-### Cách 1: Chạy nhanh qua Maven Command (Sử dụng Embedded Tomcat)
-Dự án đã được tích hợp sẵn plugin `cargo-maven3-plugin` giúp bạn chạy trực tiếp Tomcat 9 từ dòng lệnh mà không cần cài đặt Tomcat thủ công:
-
-1.  Mở Terminal / Command Prompt tại thư mục chứa file `pom.xml`.
-2.  **Clean và cài đặt dependencies:**
+1.  **Cài đặt CSDL:** Chạy Script SQL Server đính kèm.
+2.  **Cấu hình:** Thay đổi Username/Password database trong file cấu hình.
+3.  **Build & Run:**
     ```bash
     mvn clean install
     ```
-3.  **Khởi chạy dự án:**
     ```bash
     mvn cargo:run
     ```
-4.  Truy cập ứng dụng tại: `http://localhost:8080/`
-
-### Cách 2: Khởi chạy thông qua IDE (NetBeans/IntelliJ/Eclipse)
-1.  Mở IDE và chọn **Open Project**, chọn thư mục chứa file `pom.xml`.
-2.  **Cấu hình Database:** Kiểm tra chuỗi kết nối (Connection String) trong source code để khớp với Database SQL Server local (Username, Password, Tên DB).
-3.  Thêm Web Server (Tomcat / GlassFish) vào IDE.
-4.  Chuột phải vào dự án và chọn **Run**.
-
----
-
-## 📂 Cấu trúc dự án
-*   `pom.xml`: File cấu hình dependency và plugin của Maven.
-*   `src/main/java`: Chứa toàn bộ mã nguồn Java (Controllers, Models, DAOs, DB Context...).
-*   `src/main/webapp`: Chứa mã nguồn giao diện (JSP, HTML, CSS, JavaScript).
-*   `nb-configuration.xml`: Cấu hình dành riêng cho NetBeans IDE.
+4.  Truy cập: `http://localhost:8080/`
 
 ---
 
 ## 👨‍💻 Thông tin nộp bài
-*   **Dự án:** Hotel Management System
-*   **Môn học:** PRJ301 - Java Web Application Development
-*   **Trạng thái:** Hoàn thiện tích hợp Thanh toán & Email.
+*   **Tác giả:** Mai Huy Hoàng
+*   **Môn học:** PRJ301 - Lập trình Web với Java
+*   **Đánh giá:** Dự án hoàn thiện 100% các tính năng cốt lõi và tích hợp nâng cao.
 
 ---
 *Dự án được quản lý và triển khai chuyên nghiệp trên GitHub.*
