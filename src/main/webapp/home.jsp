@@ -93,7 +93,7 @@
                     <div class="stay-pager">
                         <button type="button" class="stay-page active" data-index="0">1</button>
                         <button type="button" class="stay-page" data-index="1">2</button>
-                        <button type="button" class="stay-page" data-index="1">3</button>
+                        <button type="button" class="stay-page" data-index="2">3</button>
                     </div>
 
                     <a class="stay-all" href="<%=ctx%>/rooms.jsp">Xem tất cả</a>
