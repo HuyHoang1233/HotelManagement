@@ -18,7 +18,7 @@ public class GoogleUtils {
     public static final String GOOGLE_CLIENT_SECRET = "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";
 
     // Link này phải trùng KHỚP 100% với link trong Google Cloud Console
-    public static final String GOOGLE_REDIRECT_URI = "http://localhost:8081/HotelManagement/login-google";
+    public static final String GOOGLE_REDIRECT_URI = "http://localhost:8080/HotelManagement/login-google";
 
     public static final String GOOGLE_GRANT_TYPE = "authorization_code";
     public static final String GOOGLE_LINK_GET_TOKEN = "https://oauth2.googleapis.com/token";

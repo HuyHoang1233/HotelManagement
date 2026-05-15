@@ -19,7 +19,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarContent">
-            <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-semibold">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-semibold ms-4">
                 <li class="nav-item"><a class="nav-link text-white px-3" href="<%=ctx%>/restaurant.jsp">Nhà hàng</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3" href="<%=ctx%>/search">Lưu trú</a></li>
                 <li class="nav-item"><a class="nav-link text-white px-3" href="<%=ctx%>/meeting.jsp">Hội nghị</a></li>
@@ -35,14 +35,14 @@
                         <div class="dropdown me-2">
                             <a class="text-white fw-bold text-decoration-none dropdown-toggle d-flex align-items-center" href="#" role="button" id="userMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="bg-light text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold me-2" style="width: 32px; height: 32px;">
-                                    ${sessionScope.account.fullName != null ? sessionScope.account.fullName.substring(0,1).toUpperCase() : sessionScope.account.username.substring(0,1).toUpperCase()}
+                                    ${not empty sessionScope.account.fullName ? sessionScope.account.fullName.substring(0,1).toUpperCase() : sessionScope.account.email.substring(0,1).toUpperCase()}
                                 </div>
-                                ${sessionScope.account.fullName != null ? sessionScope.account.fullName : sessionScope.account.username}
+                                ${not empty sessionScope.account.fullName ? sessionScope.account.fullName : sessionScope.account.email}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userMenuLink">
                                 <li>
                                     <div class="dropdown-header text-center">
-                                        <strong>${sessionScope.account.fullName != null ? sessionScope.account.fullName : sessionScope.account.username}</strong><br>
+                                        <strong>${not empty sessionScope.account.fullName ? sessionScope.account.fullName : sessionScope.account.email}</strong><br>
                                         <small class="text-muted">${sessionScope.account.email}</small><br>
                                         <c:choose>
                                             <c:when test="${sessionScope.account.roleID == 1}">
@@ -61,18 +61,14 @@
                                 <li><a class="dropdown-item text-danger" href="<%=ctx%>/logout"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a></li>
                             </ul>
                         </div>
-                        <a href="<%=ctx%>/wishlist" class="nav-link text-white position-relative me-3" title="Danh sách yêu thích">
+                        <a href="<%=ctx%>/wishlist" class="nav-link text-white position-relative me-2" title="Danh sách yêu thích">
                             <i class="fas fa-heart fs-4"></i>
-                            <%-- Nếu muốn hiện số lượng phòng đã lưu, bạn có thể truyền biến wishlistSize từ Servlet --%>
                             <c:if test="${not empty wishlistSize && wishlistSize > 0}">
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
                                     ${wishlistSize}
                                 </span>
                             </c:if>
                         </a>
-
-                        <span class="text-white fw-bold me-3">Hi, ${sessionScope.account.fullName != null ? sessionScope.account.fullName : sessionScope.account.username}</span>
-
                         <%-- HIỆN NÚT QUẢN TRỊ NẾU LÀ ADMIN (roleID = 1) --%>
                         <c:if test="${sessionScope.account.roleID == 1}">
                             <a href="<%=ctx%>/admin/admin_dashboard.jsp" class="btn btn-warning btn-sm fw-bold">Quản Trị</a>

@@ -4,6 +4,8 @@ import com.khoana.hotelmanagement.dal.BookingDAO;
 import com.khoana.hotelmanagement.dal.VNPayBillDAO;
 import com.khoana.hotelmanagement.model.User;
 import com.khoana.hotelmanagement.model.VNPay_Bill;
+import com.khoana.hotelmanagement.dal.RoomDAO;
+import com.khoana.hotelmanagement.model.Booking;
 import com.khoana.hotelmanagement.util.EmailUtils;
 
 import javax.servlet.ServletException;
@@ -38,6 +40,13 @@ public class PaymentStatusServlet extends HttpServlet {
 
             // ĐÃ FIX: Đổi từ updateBookingStatus thành updateStatus cho khớp với DAO mới
             bookingDAO.updateStatus(bookingID, "Confirmed");
+
+            // MỚI: Cập nhật trạng thái phòng thành 'Booked' để nó không hiện lên trang chủ nữa
+            Booking b = bookingDAO.getBookingByID(bookingID);
+            if (b != null) {
+                RoomDAO roomDAO = new RoomDAO();
+                roomDAO.updateRoomStatus(b.getRoomID(), "Booked");
+            }
 
             // 2. Lưu hóa đơn VNPay
             VNPayBillDAO billDAO = new VNPayBillDAO();

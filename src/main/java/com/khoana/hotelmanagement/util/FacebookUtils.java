@@ -17,7 +17,7 @@ public class FacebookUtils {
     public static final String FACEBOOK_APP_SECRET = "YOUR_FB_APP_SECRET";
 
     // 👇 QUAN TRỌNG: Sửa lại đường dẫn đúng với tên Project của bạn (HotelManagement)
-    public static final String FACEBOOK_REDIRECT_URI = "http://localhost:8081/HotelManagement/login-facebook";
+    public static final String FACEBOOK_REDIRECT_URI = "http://localhost:8080/HotelManagement/login-facebook";
 
     public static final String FACEBOOK_LINK_GET_TOKEN = "https://graph.facebook.com/oauth/access_token";
     public static final String FACEBOOK_LINK_GET_USER_INFO = "https://graph.facebook.com/me?fields=id,name,email,picture&access_token=";

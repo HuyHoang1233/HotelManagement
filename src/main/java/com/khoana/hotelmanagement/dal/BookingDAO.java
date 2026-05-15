@@ -170,4 +170,27 @@ public class BookingDAO extends DBContext {
             System.out.println("Lỗi tại updateStatus: " + e.getMessage());
         }
     }
+    // 6. Lấy thông tin đơn hàng theo ID
+    public Booking getBookingByID(int bookingID) {
+        String sql = "SELECT * FROM Bookings WHERE bookingID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, bookingID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Booking b = new Booking();
+                b.setBookingID(rs.getInt("bookingID"));
+                b.setUserID(rs.getInt("userID"));
+                b.setRoomID(rs.getInt("roomID"));
+                b.setCheckInDate(rs.getDate("checkInDate"));
+                b.setCheckOutDate(rs.getDate("checkOutDate"));
+                b.setTotalPrice(rs.getDouble("totalPrice"));
+                b.setStatus(rs.getString("status"));
+                return b;
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi tại getBookingByID: " + e.getMessage());
+        }
+        return null;
+    }
 }

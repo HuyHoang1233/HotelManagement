@@ -197,18 +197,17 @@ public class UserDAO extends DBContext {
     }
 
     public boolean updateUserProfile(User user) {
-        String sql = "UPDATE Users SET fullName = ?, email = ?, password = ?, roleID = ? WHERE userID = ?";
+        String sql = "UPDATE Users SET fullName = ?, phone = ? WHERE userID = ?";
         try {
             if (connection == null) {
                 return false;
             }
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setNString(1, user.getFullName());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getPassword());
-            ps.setInt(4, user.getRoleID());
-            ps.setInt(5, user.getId());
-            return ps.executeUpdate() > 0;
+            ps.setString(2, user.getPhone());
+            ps.setInt(3, user.getId());
+            ps.executeUpdate();
+            return true;
         } catch (SQLException e) {
             System.out.println("Lỗi updateUserProfile: " + e.getMessage());
         }

@@ -1,3 +1,4 @@
+<%@page import="com.khoana.hotelmanagement.util.GoogleUtils"%>
 <%@page import="java.net.URLDecoder"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -212,13 +213,14 @@
                 <div class="or-separator">Hoặc tiếp tục với</div>
                 <div class="row gx-3">
                     <div class="col-6">
-                        <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http%3A%2F%2Flocalhost%3A8081%2FHotelManagement%2Flogin-google&response_type=code&client_id=564583690749-82fah1b28gfo5v8mi91qs309uc9a2n5n.apps.googleusercontent.com&approval_prompt=force" class="btn btn-social-modern">
+                        <%-- Link Google OAuth: Lấy trực tiếp từ GoogleUtils để đảm bảo đồng bộ 100% --%>
+                        <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=<%=java.net.URLEncoder.encode(GoogleUtils.GOOGLE_REDIRECT_URI, "UTF-8")%>&response_type=code&client_id=<%=GoogleUtils.GOOGLE_CLIENT_ID%>&approval_prompt=force" class="btn btn-social-modern">
                             <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="social-logo" alt="Google">
                             Google
                         </a>
                     </div>
                     <div class="col-6">
-                        <a href="https://www.facebook.com/dialog/oauth?client_id=YOUR_FB_APP_ID&redirect_uri=http%3A%2F%2Flocalhost%3A8081%2FHotelManagement%2Flogin-facebook&scope=email" class="btn btn-social-modern">
+                        <a href="https://www.facebook.com/dialog/oauth?client_id=YOUR_FB_APP_ID&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2FHotelManagement%2Flogin-facebook&scope=email" class="btn btn-social-modern">
                             <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" class="social-logo" alt="Facebook">
                             Facebook
                         </a>

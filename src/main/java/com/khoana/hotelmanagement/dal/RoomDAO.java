@@ -206,4 +206,17 @@ public class RoomDAO extends DBContext {
         }
         return list;
     }
+    
+    // 6. Cập nhật trạng thái phòng (Dùng để ẩn phòng sau khi đặt thành công)
+    public void updateRoomStatus(int roomID, String status) {
+        String sql = "UPDATE Rooms SET status = ? WHERE roomID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, status);
+            ps.setInt(2, roomID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Lỗi tại updateRoomStatus: " + e.getMessage());
+        }
+    }
 }

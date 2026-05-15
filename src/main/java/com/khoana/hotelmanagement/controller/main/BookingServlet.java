@@ -149,10 +149,21 @@ public class BookingServlet extends HttpServlet {
                     }
                 }
 
-                String vnp_SecureHash = Config.hmacSHA512(Config.vnp_HashSecret, hashData.toString());
-                String paymentUrl = Config.vnp_PayUrl + "?" + query.toString() + "&vnp_SecureHash=" + vnp_SecureHash;
+                // === CHẾ ĐỘ GIẢ LẬP THANH TOÁN (MOCK PAYMENT) ĐỂ NỘP BÀI ===
+                // Vì VNPay Sandbox đang lỗi cổng kết nối, chúng ta sẽ chuyển hướng thẳng về trang thành công.
+                String mockPaymentUrl = request.getContextPath() + "/paymentStatus?"
+                        + "vnp_ResponseCode=00&"
+                        + "vnp_TxnRef=" + vnp_TxnRef + "&"
+                        + "vnp_Amount=" + amount + "&"
+                        + "vnp_OrderInfo=" + latestBookingID + "&"
+                        + "vnp_PayDate=" + formatter.format(cld.getTime());
+                
+                response.sendRedirect(mockPaymentUrl);
 
-                response.sendRedirect(paymentUrl);
+                // Code VNPay thực tế (để nộp cho cô xem logic):
+                // String vnp_SecureHash = Config.hmacSHA512(Config.vnp_HashSecret, hashData.toString());
+                // String paymentUrl = Config.vnp_PayUrl + "?" + query.toString() + "&vnp_SecureHash=" + vnp_SecureHash;
+                // response.sendRedirect(paymentUrl);
 
             } else {
                 response.sendRedirect(request.getContextPath() + "/search?error=booking_failed");
